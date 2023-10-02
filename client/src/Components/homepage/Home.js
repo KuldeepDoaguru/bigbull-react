@@ -16,7 +16,9 @@ import imgtexthome2 from "../photos/img-text-home/2.png";
 import imgtexthome3 from "../photos/img-text-home/3.png";
 
 import Homepagecoursecardcontainer from "../Cards/Homepagecoursecardcontainer";
+import Productslider1 from "../product-slider/Productslider1";
 import Productslider from "../product-slider/Productslider";
+import Homeblogs from "./Homeblogs";
 
 const Home = () => {
   const [carousel, setcarousel] = useState([]);
@@ -60,19 +62,27 @@ const Home = () => {
           <Carousel.Item interval={1000}>
             <img
               className="d-block w-100"
-              src="https://res.cloudinary.com/antrix/image/upload/v1694849275/hms/backlogin2_ow8l1b.png"
+              src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695806457/mainbanner1_vj9eef.jpg"
               alt="First slide"
-              style={{ height: "25rem" }}
+              style={{ height: "35rem" }}
             />
           </Carousel.Item>
           <Carousel.Item interval={1000}>
             <img
               className="d-block w-100"
-              src="https://res.cloudinary.com/antrix/image/upload/v1680268183/business-gaf7618fc8_1920_ppn69o.jpg"
+              src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695806455/84275e_d9ef270b0d6e4025b17aba36b3f3d074_mv2_x41l8v.gif"
               alt="Second slide"
-              style={{ height: "25rem" }}
+              style={{ height: "35rem" }}
             />
           </Carousel.Item>
+          {/* <Carousel.Item interval={1000}>
+            <img
+              className="d-block w-100"
+              src=""
+              alt="third slide"
+              style={{ height: "32rem" }}
+            />
+          </Carousel.Item> */}
         </Carousel>
       </div>
 
@@ -142,8 +152,10 @@ const Home = () => {
           </p>
         </div>
       </div>
+      <Productslider1 />
+      {/* <Productslider /> */}
+    <Homeblogs />
 
-      <Productslider />
     </div>
   );
 };

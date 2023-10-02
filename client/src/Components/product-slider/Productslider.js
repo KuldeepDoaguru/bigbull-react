@@ -1,124 +1,134 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-function Productslider() {
-  return (
-    <>
-      <div className="ms-5">
-        <a href="/" className="mr-5" style={{ color: "black" }}>
-          PYTHON
-        </a>
-        <a href="/" className="mr-5" style={{ color: "black" }}>
-          JAVA
-        </a>
-        <a href="/" className="mr-5" style={{ color: "black" }}>
-          C++
-        </a>
-        <a href="/" className="mr-5" style={{ color: "black" }}>
-          C
-        </a>
-        <a href="/" className="mr-5" style={{ color: "black" }}>
-          Design
-        </a>
-        <a href="/" className="mr-5" style={{ color: "black" }}>
-          REACT
-        </a>
-        <a href="/" className="mr-5" style={{ color: "black" }}>
-          HTML
-        </a>
-        <a href="/" className="mr-5" style={{ color: "black" }}>
-          CSS
-        </a>
-        <a href="/" className="" style={{ color: "black" }}>
-          JAVASCRIPT
-        </a>
-      </div>
-      <div className="border me-5 ms-5 my-3 mb-5">
-        <div className="container-fluid pe-5 ps-5 my-3 mb-3 py-4 pb-4">
-          <div className="card-group">
-            <div className="card d-flex mr-3 shadow ">
-              <img
-                src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                className="card-img-top"
-                alt="Video Thumbnail"
-              />
-              <video className="card-img-overlay">
-                <source src="your-video.mp4" type="video/mp4" />
-              </video>
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <a href="/" className="btn btn-primary">
-                  Go somewhere
-                </a>
-              </div>
+import React, { useEffect, useState } from 'react'
+import Productcard from './Productcard'
+import './Productcarousel.css'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import axios from 'axios'
+
+const Productslider = () => {
+    const btnpressprev = () => {
+        let box = document.querySelector('.product-container');
+        let width = box.clientWidth;
+        box.scrollLeft = box.scrollLeft - width - width / 2;
+        // width = width + box.offsetWidth;
+        console.log(width);
+    }
+
+    const btnpressnext = () => {
+        let box = document.querySelector('.product-container');
+        let width = box.clientWidth;
+        // width = width + box.offsetWidth;
+        box.scrollLeft = box.scrollLeft + width + width / 2;
+
+        console.log(width);
+    }
+
+
+    const [allCourses, setallCourses] = useState([]);
+
+    const [keyword, setkeyword] = useState('');
+
+    useEffect(() => {
+        axios.get(`/course/course/`).then((response) => {
+            setallCourses(response.data);
+        }).catch((e) => {
+            toast.error(e, {
+                position: "top-center",
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                theme: 'colored'
+            });
+        })
+    }, [])
+
+    function GetSortOrder(prop) {
+        return function (a, b) {
+            if (a[prop] < b[prop]) {
+                return 1;
+            } else if (a[prop] > b[prop]) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+
+    // console.log(allCourses)
+    // allCourses.map((course) => {
+    //     console.log(course.course_price)
+    // })
+    return (
+
+        <>
+            <div className="product-carousel-outer">
+                <h1 className="product-carousel-title">Explore More Courses</h1>
+                
+                <div className='product-carousel'>
+                    <button className='pre-btn' onClick={btnpressprev}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <div className='container'>
+                    <div class="card-group">
+                        <div class="card">
+                            <img src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/OIP_3_ozadnp.jpg" class="card-img-top"  alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5> 
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/OIP_3_ozadnp.jpg" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>  
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/OIP_3_ozadnp.jpg" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                              
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <button className='next-btn' onClick={btnpressnext}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <div className='product-container'>
+                        {allCourses.map((course, i) => (
+                            <div key={i}>
+                                <Productcard coursename={course.course_name} creator={course.course_author} courseimg={course.course_image} coursedescription={course.course_description} courseprice={course.course_price} courseoffer={course.offer_price} courseid={course._id} />
+                            </div>
+                        ))}
+
+                    </div>
+                </div>
             </div>
-            <div className="card d-flex mr-3 shadow ">
-              <img
-                src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                className="card-img-top"
-                alt="Video Thumbnail"
-              />
-              <video className="card-img-overlay">
-                <source src="your-video.mp4" type="video/mp4" />
-              </video>
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <a href="/" className="btn btn-primary" id="bgs">
-                  Go somewhere
-                </a>
-              </div>
-            </div>
-            <div className="card d-flex mr-3 shadow">
-              <img
-                src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                className="card-img-top"
-                alt="Video Thumbnail"
-              />
-              <video className="card-img-overlay">
-                <source src="your-video.mp4" type="video/mp4" />
-              </video>
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <a href="/" className="btn btn-primary">
-                  Go somewhere
-                </a>
-              </div>
-            </div>
-            <div className="card d-flex mr-3 shadow ">
-              <img
-                src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                className="card-img-top"
-                alt="Video Thumbnail"
-              />
-              <video className="card-img-overlay">
-                <source src="your-video.mp4" type="video/mp4" />
-              </video>
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <a href="/" className="btn btn-primary">
-                  Go somewhere
-                </a>
-              </div>
-            </div>
-            <div className="card d-flex mr-3 shadow">
-              <img
-                src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                className="card-img-top"
-                alt="Video Thumbnail"
-              />
-              <video className="card-img-overlay">
-                <source src="your-video.mp4" type="video/mp4" />
-              </video>
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <a href="/" className="btn btn-primary">
-                  Go somewhere
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+            <ToastContainer />
+        </>
+    )
 }
-export default Productslider;
+
+export default Productslider

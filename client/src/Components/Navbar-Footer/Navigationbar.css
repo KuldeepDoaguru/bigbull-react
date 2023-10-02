@@ -7,7 +7,22 @@ nav {
     box-shadow: 0px 10px 22px -22px black;
 }
 
-
+#enroll{
+    background-color:#9400D3;
+    border:none;
+    color: white;
+}
+#enroll:hover{
+    color:black;
+}
+#login{
+    background-color:#9400D3;
+    border:none;
+    color: white;
+}
+#login:hover{
+    color:black;
+}
 nav .right {
     display: flex;
     flex-direction: row;

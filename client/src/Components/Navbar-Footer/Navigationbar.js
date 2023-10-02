@@ -5,7 +5,6 @@ import "./Navigationbar.css";
 import Cookies from "js-cookie";
 import testimg from "../photos/no-profile.jpg";
 import axios from "axios";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -142,7 +141,7 @@ const Navigationbar = () => {
                 {userdetails != undefined ? (
                   <></>
                 ) : (
-                  <button variant="outline-info" className="text-capitalize">
+                  <button variant="" className="text-capitalize" id="enroll">
                     Enroll now
                   </button>
                 )}
@@ -151,7 +150,7 @@ const Navigationbar = () => {
                 {userdetails != undefined ? (
                   <></>
                 ) : (
-                  <button variant="outline-info" className="text-capitalize">
+                  <button variant="" className="text-capitalize" id="login">
                     Login
                   </button>
                 )}

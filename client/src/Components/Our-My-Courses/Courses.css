@@ -37,6 +37,22 @@
     /* width: 1200px; */
     margin-top: 50px;
 }
+.card-image {
+    height: 140px; 
+    object-fit: cover; 
+}
+.start{
+    width:90px;
+}
+.card-body{
+    margin-top: -10px;
+}
+ .rate{
+    color: blueviolet;
+    font-weight: 600;
+    font-size:x-small;
+ }   
+
 
 @media (max-width: 750px) {
     .course-searchbar {

@@ -1,8 +1,16 @@
+nav{
+    background-color:#f1f6ff;
+
+}
 .big-heading {
     display: flex;
     justify-content: center;
     width: 100%;
 
+}
+
+.carousel-container{
+    background-color: #E1EBEE;
 }
 
 .big-heading span {

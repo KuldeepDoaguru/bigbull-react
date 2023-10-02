@@ -40,7 +40,8 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Privacy_policy from './Components/Terms&Conditions/Privacy_policy';
-
+import Ritin from './Components/Cards/Ritin';
+import Productslider2 from './Components/product-slider/productslider2';
 function App() {
 
 
@@ -52,6 +53,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route path='/' element={<Home />} />
+            <Route path='/ritin' element={<Ritin/>} />
+            <Route path='/productslider2' element={<Productslider2/>} />
             <Route element={<Auth />}>
               {/* authenticate users */}
               <Route path='/userprofile' element={<Userprofile />} />

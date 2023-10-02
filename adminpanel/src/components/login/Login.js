@@ -96,11 +96,11 @@ const Login = () => {
                         <div className='login-right'>
                             <h1>Admin Login</h1>
                             <br />
-                            <label>Username</label>
+                            {/* <label>Username</label>
                             <input type="text" name='email' id="username"
                                 // value={email}
                                 // onChange={(e) => setEmail(e.target.value)}
-                                placeholder='Enter your username' />
+                                placeholder='Enter your username' /> */}
                             <label>Password</label>
                             <input type="password" name='pwd' id="pwd"
                                 // value={pwd}

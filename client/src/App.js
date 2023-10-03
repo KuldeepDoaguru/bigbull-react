@@ -13,8 +13,8 @@ import Courses from './Components/Our-My-Courses/Courses';
 import Auth from './Components/Login-Enroll/Auth';
 import Layout from './Components/Layout'
 import Blogpage from './Components/Blogs/Blogpage';
- 
-import Userprofile from './Components/userprofile/Userprofile';
+
+// import Userprofile from './Components/userprofile/Userprofile';
 import Invoice from './Components/userprofile/Invoice';
 import PrintInvoice from './Components/userprofile/PrintInvoice';
 import Changeprofileimage from './Components/userprofile/Changeprofileimage';
@@ -53,7 +53,7 @@ function App() {
             <Route path='/productslider2' element={<Productslider2/>} />
             <Route element={<Auth />}>
               {/* authenticate users */}
-              <Route path='/userprofile' element={<Userprofile />} />
+              {/* <Route path='/userprofile' element={<Userprofile />} /> */}
             </Route>
             <Route path='home' element={<Home />} />
             <Route path='enrollnow' element={<Enrollnow />} />

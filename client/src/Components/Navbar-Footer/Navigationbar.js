@@ -123,7 +123,17 @@ const Navigationbar = () => {
                   <p>About Us</p>
                 )}
               </Link>
-
+              <Link
+                to="/blogs"
+                onClick={userprofdropclose}
+                style={{ textDecoration: "none" }}
+              >
+                {location.pathname == "/blogs" ? (
+                  <p className="active">Blogs</p>
+                ) : (
+                  <p>Blogs</p>
+                )}
+              </Link>
               <Link
                 to="/contact"
                 onClick={userprofdropclose}

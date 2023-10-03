@@ -25,9 +25,6 @@ const Courses = () => {
             });
         })
     }, [])
-
-
-
     return (
         <>
             <div className='coursepage'>

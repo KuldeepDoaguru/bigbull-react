@@ -12,8 +12,8 @@ import Contact from './Components/Contactpage/Contact';
 import Courses from './Components/Our-My-Courses/Courses';
 import Auth from './Components/Login-Enroll/Auth';
 import Layout from './Components/Layout'
-
-
+import Blogpage from './Components/Blogs/Blogpage';
+ 
 import Userprofile from './Components/userprofile/Userprofile';
 import Invoice from './Components/userprofile/Invoice';
 import PrintInvoice from './Components/userprofile/PrintInvoice';
@@ -40,11 +40,8 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Privacy_policy from './Components/Terms&Conditions/Privacy_policy';
-import Ritin from './Components/Cards/Ritin';
 import Productslider2 from './Components/product-slider/productslider2';
 function App() {
-
-
   return (
     <div>
       <>
@@ -53,7 +50,6 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route path='/' element={<Home />} />
-            <Route path='/ritin' element={<Ritin/>} />
             <Route path='/productslider2' element={<Productslider2/>} />
             <Route element={<Auth />}>
               {/* authenticate users */}
@@ -65,7 +61,7 @@ function App() {
             <Route path='about' element={<About />} />
             <Route path='contact' element={<Contact />} />
             <Route path='courses' element={<Courses />} />
-
+            <Route path='blogs' element={<Blogpage />} />
             <Route path='/userinvoice' element={<Invoice />} />
             <Route path='/printinvoice/:invoice_id' element={<PrintInvoice />} />
             <Route path='/changeprofilepic' element={<Changeprofileimage />} />
@@ -95,5 +91,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

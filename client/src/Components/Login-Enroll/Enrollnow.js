@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import carouselimg3 from "../../image/bb3.webp";
+
 const Enrollnow = () => {
   const navigate = useNavigate();
 
@@ -135,8 +137,12 @@ const Enrollnow = () => {
   const { email, mobileNo, pwd, cpwd, state, referredCode } = user;
   return (
     <>
-      <form method="POST">
-        <div className="outer-enrollnow-container ">
+    <div>
+          <img src={carouselimg3} alt='about' />
+        </div>
+    <div className="pt-5">
+    <form method="POST">
+        <div className="outer-enrollnow-container pt-5 mt-5">
           <div className="enrollnow-container">
             <div className="enrollnow-left">
               <img src={logoimg} />
@@ -224,6 +230,8 @@ const Enrollnow = () => {
           </div>
         </div>
       </form>
+    </div>
+     
 
       <ToastContainer />
     </>

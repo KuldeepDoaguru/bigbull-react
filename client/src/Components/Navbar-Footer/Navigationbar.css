@@ -5,6 +5,9 @@ nav {
     padding: 5px;
     align-items: center;
     box-shadow: 0px 10px 22px -22px black;
+    position: absolute;
+    z-index: 1;
+    background-color: transparent;
 }
 
 #enroll{
@@ -44,11 +47,12 @@ nav .right .section-1 {
     width: 500px;
     justify-content: space-evenly;
     align-items: center;
+    color: white;
     /* background-color: #1FBCD4; */
 }
 
 .navlinks p {
-    color: black;
+    color: white;
     font-size: 16px;
     font-weight: 600;
     /* background-color: #d41f92; */

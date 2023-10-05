@@ -7,9 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Carousel from "react-bootstrap/Carousel";
 import "./Home.css";
 
-import carouselimg1 from "../photos/home-carousel-img/1.png";
-import carouselimg2 from "../photos/home-carousel-img/2.png";
-import carouselimg3 from "../photos/home-carousel-img/3.png";
+import carouselimg1 from "../../image/RegisterNow.webp";
+import carouselimg2 from "../../image/b2.webp";
+import carouselimg3 from "../../image/bb3.webp";
 
 import imgtexthome1 from "../photos/img-text-home/1.png";
 import imgtexthome2 from "../photos/img-text-home/2.png";
@@ -19,6 +19,7 @@ import Homepagecoursecardcontainer from "../Cards/Homepagecoursecardcontainer";
 import Productslider1 from "../product-slider/Productslider1";
 import Productslider from "../product-slider/Productslider";
 import Homeblogs from "./Homeblogs";
+import styled from "styled-components";
 
 const Home = () => {
   const [carousel, setcarousel] = useState([]);
@@ -41,6 +42,8 @@ const Home = () => {
   }, []);
 
   return (
+    <>
+    <Container>
     <div>
       {/* Carousel */}
       <div className="carousel-container">
@@ -62,7 +65,7 @@ const Home = () => {
           <Carousel.Item interval={1000}>
             <img
               className="d-block w-100"
-              src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695806457/mainbanner1_vj9eef.jpg"
+              src={carouselimg3}
               alt="First slide"
               style={{ height: "35rem" }}
             />
@@ -70,25 +73,25 @@ const Home = () => {
           <Carousel.Item interval={1000}>
             <img
               className="d-block w-100"
-              src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695806455/84275e_d9ef270b0d6e4025b17aba36b3f3d074_mv2_x41l8v.gif"
+              src={carouselimg2}
               alt="Second slide"
               style={{ height: "35rem" }}
             />
           </Carousel.Item>
-          {/* <Carousel.Item interval={1000}>
+          <Carousel.Item interval={1000}>
             <img
               className="d-block w-100"
-              src=""
+              src={carouselimg1}
               alt="third slide"
-              style={{ height: "32rem" }}
+              style={{ height: "35rem" }}
             />
-          </Carousel.Item> */}
+          </Carousel.Item>
         </Carousel>
       </div>
 
-      <div className="big-heading">
+      {/* <div className="big-heading">
         <span>We are Bigbulls</span>
-      </div>
+      </div> */}
 
       <div className="home-paragraph">
         <h1>Who Are We ?</h1>
@@ -157,7 +160,13 @@ const Home = () => {
     <Homeblogs />
 
     </div>
+    </Container>
+    </>
+  
   );
 };
 
 export default Home;
+const Container = styled.div`
+// background: url("https://res.cloudinary.com/dq5upuxm8/image/upload/v1696505140/background1_d81fmy.png");
+`;

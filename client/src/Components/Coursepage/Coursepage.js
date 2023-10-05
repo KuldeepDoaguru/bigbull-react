@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRecoilState } from 'recoil'
 import { videoatomid } from '../../atoms/currentVideoplaying'
 import Productslider from '../product-slider/Productslider'
+import coursebanner from "../../image/coursebanner.webp"
+import styled from 'styled-components'
 
 var videoIndex = 0;
 const Coursepage = () => {
@@ -220,7 +222,9 @@ const Coursepage = () => {
     }
     return (
         <>
-            <div className='coursepg-outer'>
+        <Container>
+        
+        <div className='coursepg-outer'>
                 {typeof (selectedCourse) == 'object' ?
                     <div className='coursepg-inner'>
                         <div className='s1'>
@@ -300,10 +304,15 @@ const Coursepage = () => {
                         <Productslider />
                     </div>
                     : <h1>Loading...</h1>}
-            </div><ToastContainer /></>
+            </div>
+            {/* <ToastContainer /> */}
+        </Container>
+        </>
+            
     )
 }
 
 
 
-export default Coursepage
+export default Coursepage;
+const Container = styled.div``;

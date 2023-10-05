@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import contactbanner from "../../image/contact.webp"
 
 const Contact = () => {
 
@@ -40,9 +41,12 @@ const Contact = () => {
 
     return (
         <>
+        <div>
+          <img src={contactbanner} alt='about' />
+        </div>
             <div className='contact-outer'>
-                <div className='contact-inner'>
-                    <p>Contact Us</p>
+                <div className='contact-inner pt-5'>
+                    <p className='mt-5'>Contact Us</p>
                     <div className='contact-innermost'>
                         <img src={contactpic} />
                         <form>

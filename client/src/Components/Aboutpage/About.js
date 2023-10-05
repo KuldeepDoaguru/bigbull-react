@@ -1,10 +1,16 @@
 import React from 'react'
 import Styled from 'styled-components';
+import backgroundImg from "../../image/bgwebp.webp";
+import aboutbanner from "../../image/About_bb.webp";
 function Aboutus() {
   return (
     <>
       <Container>
+      <div>
+          <img src={aboutbanner} alt='about' />
+        </div>
         <div className='container-fluid bgColor'>
+        
           <div className='row my-5 ms-5 me-5'>
             <div className='col-sm-6'>
               <h2>About Us</h2>
@@ -449,8 +455,10 @@ function Aboutus() {
 
 export default Aboutus;
 const Container = Styled.div`
+background: url("https://res.cloudinary.com/dq5upuxm8/image/upload/v1696505140/background1_d81fmy.png");
+// margin-top:6rem;
 .bgColor {
-    background-color: #eee;
+    // background-color: #eee;
     padding:40px;
 }
 .card-img-top{

@@ -7,6 +7,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Card1 from '../Cards/Card1';
+import styled from 'styled-components';
+import coursebanner from "../../image/coursebanner.webp"
 const Courses = () => {
     const [allCourses, setallCourses] = useState([]);
 
@@ -27,7 +29,11 @@ const Courses = () => {
     }, [])
     return (
         <>
-            <div className='coursepage'>
+        <Container>
+        <div className='mainbanner'>
+        <img src={coursebanner} alt='about' />
+        </div>
+        <div className='coursepage'>
                 <h1 className='title'>Our Courses</h1>
                 <div className='course-searchbar'>
                     <FontAwesomeIcon icon={faSearch} />
@@ -51,7 +57,7 @@ const Courses = () => {
                     </div>} */}
 
                 {/* edit my me */}
-                <div className='container border ms-3 me-3 my-5 mb-5'>
+                <div className='container ms-3 me-3 my-5 mb-5'>
                     <div>
                         <h3 className='my-3'>We have 230 videos total</h3>
                     </div>
@@ -273,6 +279,7 @@ const Courses = () => {
                     </div>
                 </div>
             </div>
+        </Container>
 
             <ToastContainer />
 
@@ -280,4 +287,9 @@ const Courses = () => {
     )
 }
 
-export default Courses
+export default Courses;
+const Container = styled.div`
+background: url("https://res.cloudinary.com/dq5upuxm8/image/upload/v1696505140/background1_d81fmy.png");
+.mainbanner{
+    box-shadow: 1px 1px 21px #e0e0e0;
+}`;

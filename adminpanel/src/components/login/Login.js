@@ -9,81 +9,81 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
-    // const navigate = useNavigate();
-    // const location = useLocation();
-    // const [email, setEmail] = useState('');
-    // const [pwd, setPassword] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [email, setEmail] = useState('');
+    const [pwd, setPassword] = useState('');
 
-    // const userdata = Cookies.get("admin");
-    // console.log("userdata Login");
+    const userdata = Cookies.get("admin");
+    console.log("userdata Login");
 
-    // console.log(userdata);
-    // useEffect(() => {
-    //     if (userdata) {
-    //         navigate("/");
-    //     }
-    // }, [userdata])
-    // const makeFieldsEmpty = () => {
-    //     setEmail("");
-    //     setPassword("");
-    // }
+    console.log(userdata);
+    useEffect(() => {
+        if (userdata) {
+            navigate("/");
+        }
+    }, [userdata])
+    const makeFieldsEmpty = () => {
+        setEmail("");
+        setPassword("");
+    }
 
-    // const login = (e) => {
-    //     e.preventDefault();
-    //     const pathname = location?.state?.from?.pathname || "/";
-    //     if (email && pwd) {
-    //         try {
-    //             axios.post('/admin/login',
-    //                 JSON.stringify({ email, pwd }), {
-    //                 headers: { "Content-Type": "application/json" }
-    //             }).then((response) => {
-    //                 console.log("response.data")
+    const login = (e) => {
+        e.preventDefault();
+        const pathname = location?.state?.from?.pathname || "/";
+        if (email && pwd) {
+            try {
+                axios.post('/admin/login',
+                    JSON.stringify({ email, pwd }), {
+                    headers: { "Content-Type": "application/json" }
+                }).then((response) => {
+                    console.log("response.data")
 
-    //                 console.log(response.data)
-    //                 Cookies.set("admin", JSON.stringify({ 'token': response.data.token, 'email': response.data.useremail.email }));
-    //                 navigate(pathname, { replace: true })
-    //             }).catch((e) => {
-    //                 if (e.response.status === 404) {
-    //                     toast.error(e.response.data, {
-    //                         position: "top-center",
-    //                         hideProgressBar: false,
-    //                         closeOnClick: true,
-    //                         pauseOnHover: true,
-    //                         theme: 'colored'
-    //                     });
-    //                 }
-    //                 if (e.response.status === 403) {
-    //                     toast.error(e.response.data, {
-    //                         position: "top-center",
-    //                         hideProgressBar: false,
-    //                         closeOnClick: true,
-    //                         pauseOnHover: true,
-    //                         theme: 'colored'
-    //                     });
-    //                 }
-    //             });
-    //             makeFieldsEmpty();
-    //         } catch (err) {
-    //             makeFieldsEmpty();
-    //             toast.error(err, {
-    //                 position: "top-center",
-    //                 hideProgressBar: false,
-    //                 closeOnClick: true,
-    //                 pauseOnHover: true,
-    //                 theme: 'colored'
-    //             });
-    //         }
-    //     } else {
-    //         toast.error('Username and Password fields are required', {
-    //             position: "top-center",
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             theme: 'colored'
-    //         });
+                    console.log(response.data)
+                    Cookies.set("admin", JSON.stringify({ 'token': response.data.token, 'email': response.data.useremail.email }));
+                    navigate(pathname, { replace: true })
+                }).catch((e) => {
+                    if (e.response.status === 404) {
+                        toast.error(e.response.data, {
+                            position: "top-center",
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            theme: 'colored'
+                        });
+                    }
+                    if (e.response.status === 403) {
+                        toast.error(e.response.data, {
+                            position: "top-center",
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            theme: 'colored'
+                        });
+                    }
+                });
+                makeFieldsEmpty();
+            } catch (err) {
+                makeFieldsEmpty();
+                toast.error(err, {
+                    position: "top-center",
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    theme: 'colored'
+                });
+            }
+        } else {
+            toast.error('Username and Password fields are required', {
+                position: "top-center",
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                theme: 'colored'
+            });
 
-    //     }
-    // }
+        }
+    }
 
     return (
         <>
@@ -107,9 +107,9 @@ const Login = () => {
                                 // onChange={(e) => setPassword(e.target.value)}
                                 placeholder='Enter your password' />
                             <Link to="/forgotpassword" className='fp'>Forgot password?</Link>
-                            {/* <input type="submit" onClick={login} value="submit" /> */}
+                            <input type="submit" onClick={login} value="submit" />
                             <hr className='light-grey-hr' />
-                            {/* <p>Don't have an account? <Link to='/enrollnow'>Enroll now</Link></p> */}
+                            <p>Don't have an account? <Link to='/enrollnow'>Enroll now</Link></p>
                         </div>
                     </div>
                 </div>

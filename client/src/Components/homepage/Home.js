@@ -92,8 +92,8 @@ const Home = () => {
       {/* <div className="big-heading">
         <span>We are Bigbulls</span>
       </div> */}
-
-      <div className="home-paragraph">
+  <Homepagecoursecardcontainer />
+      <div className="home-paragraph mb-5">
         <h1>Who Are We ?</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -109,8 +109,8 @@ const Home = () => {
         </p>
       </div>
 
-      <Homepagecoursecardcontainer />
-
+    
+      <Productslider1 />
       {/* img -text */}
       <div className="hrline"></div>
       <h1 className="head-small">Our Goal</h1>
@@ -155,7 +155,7 @@ const Home = () => {
           </p>
         </div>
       </div>
-      <Productslider1 />
+     
       {/* <Productslider /> */}
     <Homeblogs />
 

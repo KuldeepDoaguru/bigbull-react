@@ -1,3 +1,7 @@
+pt-5 mt-5
+ 
+ <Productslider1 />
+ 
 <div class="row">
                                    
                                 </div>

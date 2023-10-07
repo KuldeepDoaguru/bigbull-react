@@ -12,11 +12,11 @@ const Navbar = () => {
 
     // console.log(userdata);
     const navigate = useNavigate();
-    useEffect(() => {
-        if (!userdata) {
-            navigate("/login");
-        }
-    }, [userdata])
+    // useEffect(() => {
+    //     if (!userdata) {
+    //         navigate("/login");
+    //     }
+    // }, [userdata])
     // console.log(location.pathname)
 
 
@@ -36,7 +36,7 @@ const Navbar = () => {
         <div className='adminnav'>
             <div className='s1'>
                 <div className='left'>
-                    <img src={mainlogo} />
+                    <img src="/" alt='logo' />
                     <Link to='/'>{location.pathname == '/' ?
                         <button className='iconbtn-active'>
 
@@ -147,7 +147,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className='s2'>
-                Smart Educates Admin Panel
+                Bigbull Admin Panel
             </div>
         </div>
     )

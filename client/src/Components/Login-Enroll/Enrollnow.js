@@ -140,9 +140,9 @@ const Enrollnow = () => {
     <div>
           <img src={carouselimg3} alt='about' />
         </div>
-    <div className="pt-5">
+    <div className="pt-3 pb-3">
     <form method="POST">
-        <div className="outer-enrollnow-container pt-5 mt-5">
+        <div className="outer-enrollnow-container">
           <div className="enrollnow-container">
             <div className="enrollnow-left">
               <img src={logoimg} />

@@ -49,7 +49,7 @@ function App() {
         <Route path='/userkyc/:userid' element={<Kycuser />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/payments' element={<Payments />} />
-        <Route path='/login' element={<Login />} />
+        {/* <Route path='/login' element={<Login />} /> */}
         <Route path='/payto/:uemail' element={<Payto />} />
       </Routes>
     </BrowserRouter>

@@ -5,237 +5,299 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import carouselimg3 from "../../image/bb3.webp";
+import enroll from "../../image/EnrollNow.webp";
+import styled from "styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Enrollnow = () => {
   const navigate = useNavigate();
-
-  const initialValues = {
+  const [data, setData] = useState({
     email: "",
     mobileNo: "",
+    gender: "",
+    address: "",
+    dob: "",
     pwd: "",
     cpwd: "",
+    country: "",
     state: "",
     referredCode: "",
-  };
-  const [user, setUser] = useState(initialValues);
+  });
 
-  let name, value;
-  const handleInputs = (e) => {
-    name = e.target.name;
-    value = e.target.value;
-    setUser({ ...user, [name]: value });
+  const handleInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
+
+    // Use spread syntax to update only the changed field
+    setData({
+      ...data,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
-  const register = (e) => {
+  const handleDateChange = (date) => {
+    setData((prevData) => ({
+      ...prevData,
+      dob: date,
+    }));
+  };
+
+  console.log(data);
+
+  const register = async (e) => {
     e.preventDefault();
 
-    const { name, email, mobileNo, pwd, cpwd, state, referredCode } = user;
+    const formData = new FormData();
 
-    if (!email) {
-      toast.error("email required! ", {
-        position: "top-center",
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        theme: "colored",
-      });
-    } else if (!mobileNo) {
-      toast.warn("mobile number is required! ", {
-        position: "top-center",
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        theme: "colored",
-      });
-    } else if (!pwd) {
-      toast.warn("password is required! ", {
-        position: "top-center",
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        theme: "colored",
-      });
-    } else if (!state) {
-      toast.warn("state is required! ", {
-        position: "top-center",
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        theme: "colored",
-      });
-    } else {
-      try {
-        if (pwd === cpwd) {
-          axios
-            .post(
-              "/enroll/enroll",
-              JSON.stringify({
-                name,
-                email,
-                mobileNo,
-                pwd,
-                cpwd,
-                state,
-                referredCode,
-              }),
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  Accept: "application/json",
-                },
-              }
-            )
-            .then((response) => {
-              if (response.status === 400) {
-                toast.error(response.data.message, {
-                  position: "top-center",
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  theme: "colored",
-                });
-              }
-              if (response.status === 201) {
-                navigate("/login");
-              }
-              console.log(response);
-            })
-            .catch((e) => {
-              if (e.response.status === 400) {
-                toast.error(e.response.data, {
-                  position: "top-center",
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  theme: "colored",
-                });
-              }
-              console.log(e);
-            });
-        } else {
-          toast.error("password and confirm password do not match", {
-            position: "top-center",
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            theme: "colored",
-          });
+    // Append user.data fields to formData
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+
+    const toastOptions = {
+      position: "top-center",
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      theme: "colored",
+    };
+
+    if (!data.email) {
+      toast.error("Email is required!", toastOptions);
+    } else if (!data.mobileNo) {
+      toast.warn("Mobile number is required!", toastOptions);
+    } else if (!data.pwd) {
+      toast.warn("Password is required!", toastOptions);
+    } else if (!data.state) {
+      toast.warn("state is required", toastOptions);
+    } else if (data.pwd !== data.cpwd) {
+      toast.error("Password and confirm password do not match", toastOptions);
+    } else if (!data.name) {
+      toast.error("name is required", toastOptions);
+    } else if (!data.dob) {
+      toast.error("date of birth is required", toastOptions);
+    } else if (!data.gender) {
+      toast.error("Gender is required", toastOptions);
+    } else if (!data.country) {
+      toast.error("country is required", toastOptions);
+    } else if (!data.address) {
+      toast.error("address is required", toastOptions);
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/enroll/enroll",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      } catch (err) {
-        toast.error(err, {
-          position: "top-center",
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          theme: "colored",
-        });
+      );
+
+      if (response.status === 201) {
+        toast.success("Registration successful!", toastOptions);
+        navigate("/login");
+      } else {
+        toast.error(
+          response.data.message || "Registration failed",
+          toastOptions
+        );
       }
+    } catch (error) {
+      toast.error(error.response?.data || "An Error occured", toastOptions);
     }
   };
 
-  const { email, mobileNo, pwd, cpwd, state, referredCode } = user;
   return (
     <>
-    <div>
-          <img src={carouselimg3} alt='about' />
+      <Container>
+        <div>
+          <img src={enroll} alt="about" />
         </div>
-    <div className="pt-3 pb-3">
-    <form method="POST">
-        <div className="outer-enrollnow-container">
-          <div className="enrollnow-container">
-            <div className="enrollnow-left">
-              <img src={logoimg} />
-            </div>
-
-            <div className="enrollnow-right">
-              <h1>Register to Bigbulls</h1>
-              <br />
-              <label>name</label>
-              <input
-                type="text"
-                name="name"
-                value={name}
-                onChange={handleInputs}
-                placeholder="Enter your Full Name"
-              />
-              <label>email Id</label>
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={handleInputs}
-                placeholder="xyz@gmail.com"
-              />
-
-              <label>Enter Mobile number</label>
-              <input
-                type="number"
-                name="mobileNo"
-                value={mobileNo}
-                onChange={handleInputs}
-                placeholder="Enter your 10 digit Mobile mobileNo"
-              />
-              <div className="sub-form">
-                <div>
-                  <label>Create password</label>
-                  <input
-                    name="pwd"
-                    value={pwd}
-                    onChange={handleInputs}
-                    type="password"
-                    id="pwd"
-                  />
+        <div className="pb-3 mb-5">
+          <form onSubmit={register}>
+            <div className="outer-enrollnow-container">
+              <div className="enrollnow-container">
+                <div className="enrollnow-left">
+                  <img src={logoimg} />
                 </div>
-                <div>
-                  <label>Confirm password</label>
+
+                <div className="enrollnow-right">
+                  <h1>Register to Bigbulls</h1>
+                  <br />
+
+                  <div className="sub">
+                    <div className="row g-3">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label for="name">Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={data.name}
+                          onChange={handleInputChange}
+                          placeholder="Enter your Full Name"
+                        />
+                      </div>
+
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label for="email">Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={data.email}
+                          onChange={handleInputChange}
+                          placeholder="xyz@gmail.com"
+                        />
+                      </div>
+
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label>Enter Mobile number</label>
+                        <input
+                          type="number"
+                          name="mobileNo"
+                          value={data.mobileNo}
+                          onChange={handleInputChange}
+                          placeholder="Enter your 10 digit Mobile mobileNo"
+                        />
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label>Gender</label>
+                        <select
+                          id="gender"
+                          name="gender"
+                          value={data.gender}
+                          onChange={handleInputChange}
+                          className="inputsel"
+                        >
+                          <option value="">Select an Option</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="other">ohter</option>
+                        </select>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label>Create password</label>
+                        <input
+                          name="pwd"
+                          value={data.pwd}
+                          onChange={handleInputChange}
+                          className="inputsel"
+                          type="password"
+                          placeholder="Enter Password"
+                          id="pwd"
+                        />
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label>Confirm password</label>
+                        <input
+                          type="password"
+                          name="cpwd"
+                          placeholder="Enter Password"
+                          id="cpwd"
+                          value={data.cpwd}
+                          className="inputsel"
+                          onChange={handleInputChange}
+                        />
+                        <span id="message"></span>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label for="country">
+                          Choose your country from the list:
+                        </label>
+                        <select
+                          id="country"
+                          name="country"
+                          value={data.country}
+                          onChange={handleInputChange}
+                          className="inputsel"
+                        >
+                          <option value="">Select an Option</option>
+                          <option value="India">India</option>
+                          <option value="Australia">Australia</option>
+                          <option value="UAE">UAE</option>
+                          <option value="USA">USA</option>
+                        </select>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label for="state">
+                          Choose your state from the list:
+                        </label>
+                        <select
+                          id="state"
+                          name="state"
+                          value={data.state}
+                          onChange={handleInputChange}
+                          className="inputsel"
+                        >
+                          <option value="">Select an Option</option>
+                          <option value="Madhya Pradesh">Madhya Pradesh</option>
+                          <option value="UP">UP</option>
+                          <option value="Kerala">Kerala</option>
+                          <option value="Assam">Assam</option>
+                        </select>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label>Enter Address</label>
+                        <input
+                          type="text"
+                          name="address"
+                          value={data.address}
+                          onChange={handleInputChange}
+                          placeholder="Enter your address"
+                        />
+                      </div>
+
+                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <label for="dateInput">Select or Enter Date:</label>
+                        <div class="input-group">
+                          <DatePicker
+                            selected={data.dob}
+                            onChange={(date) => handleDateChange(date)}
+                            className="form-control inputsel"
+                            dateFormat="dd-MM-yyyy"
+                            placeholderText="Select a date"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br />
                   <input
-                    type="password"
-                    name="cpwd"
-                    id="cpwd"
-                    value={cpwd}
-                    onChange={handleInputs}
+                    name="referredCode"
+                    value={data.referredCode}
+                    onChange={handleInputChange}
+                    placeholder="Enter Referral Code"
+                    type="text"
                   />
-                  <span id="message"></span>
+                  <button className="submitbtn" type="submit">
+                    submit
+                  </button>
+
+                  <hr className="light-grey-hr" />
+                  <p>
+                    Already have an account? <Link to="/login">Login</Link>
+                  </p>
                 </div>
               </div>
-              <label for="state">Choose your state from the list:</label>
-              <select
-                id="state"
-                name="state"
-                value={state}
-                onChange={handleInputs}
-              >
-                <option value="">Select an Option</option>
-                <option value="Madhya Pradesh">Madhya Pradesh</option>
-                <option value="UP">UP</option>
-                <option value="Kerala">Kerala</option>
-                <option value="Assam">Assam</option>
-              </select>
-              <br />
-              <input
-                name="referredCode"
-                value={referredCode}
-                onChange={handleInputs}
-                placeholder="Enter Referral Code"
-                type="text"
-              />
-              <button onClick={register}>submit</button>
-
-              <hr className="light-grey-hr" />
-              <p>
-                Already have an account? <Link to="/login">Login</Link>
-              </p>
             </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-     
 
-      <ToastContainer />
+        <ToastContainer />
+      </Container>
     </>
   );
 };
 
 export default Enrollnow;
+const Container = styled.div`
+  .inputsel {
+    width: 100%;
+  }
+
+  input {
+    width: 100%;
+  }
+`;

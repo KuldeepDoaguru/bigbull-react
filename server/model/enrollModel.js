@@ -1,141 +1,42 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-
-
-/*****create schema */
-const enrollSchema = new mongoose.Schema({
+const userSchema = mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error("Invalid Email")
-            }
-        }
+      type: String,
+      required: true,
     },
-    mobileNo: {
-        type: String,
-        required: true,
+    password: {
+      type: String,
+      required: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-        validate(value) {
-            console.log(validator.isMobilePhone(value, ['en-IN']));
-            if (!validator.isMobilePhone(value, ['en-IN'])) {
-                throw new Error("Please Enter valid indian mobile number");
-            }
-        }
-
-    },
-    pwd: {
-        type: String,
-        minlength: [8, "Password length should be atleast 8"],
-        required: true,
-    },
-    state: {
-        type: String,
-        required: true,
-    },
-    referredCode: {
-        type: String,
-    },
-    active: {
-        type: Boolean,
-        required: true,
-        default: true,
-    },
-    referralCode: {
-        type: String,
-        unique: true,
-        required: true,
-        default: Date.now(),
-
-    },
-    login_attempt: {
-        type: Number,
-        default: 0,
-    },
-    gender: {
-        type: String,
-        default: '',
-    },
-    dob: {
-        type: Date,
-        default: new Date()
-    },
-    country: {
-        type: String,
-        default: 'India',
-    },
-    city: {
-        type: String,
-        default: '',
-    },
-    address: {
-        type: String,
-        default: '',
-    },
-    pincode: {
-        type: Number,
-        default: '',
-    },
-    user_image: {
-        type: String,
-    },
-    purchased_course: [{
-
-        course_id: {
-            type: String,
-            sparse: true,
-        }
-    }]
-}, { timestamps: true }); // timestamp creates two fields 1. createdAt that shows the time of field creation 
-// 2. updatedAt that shows the time of last updated
-
-
-
-/*****Bcrypt PAssword */
-enrollSchema.pre("save", async function (next) {
-    if (this.isModified("pwd")) {
-        this.pwd = await bcrypt.hash(this.pwd, 10);
-    }
-    next();
-});
-
-// enrollSchema.methods.purchase = async function (req) {
-//     console.log(req);
-//     this.purchased_course = this.purchased_course.concat(req);
-// }
-
-/******Generating Tokens */
-enrollSchema.methods.generateAuthToken = async function () {
-    try {
-        const token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
-
-        return token;
-    } catch (err) {
-        return err.toString();
-    }
+userSchema.methods.matchPassword = async function (enterPassword) {
+  return await bcrypt.compare(enterPassword, this.password);
 };
 
-/******Generating refreshTokens */
-enrollSchema.methods.generateAuthRefreshToken = async function () {
-    try {
-        const refreshToken = jwt.sign({ _id: this._id }, process.env.SECRET_REFERESH_KEY, { expiresIn: '12h' });
+//middlware for password
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
-        return refreshToken;
-    } catch (err) {
-        return err.toString();
-    }
-}
-
-/*****create module */
-const enrollModel = new mongoose.model("enrollCollection", enrollSchema);
-
+const enrollModel = mongoose.model("enrollCollection", userSchema);
 module.exports = enrollModel;

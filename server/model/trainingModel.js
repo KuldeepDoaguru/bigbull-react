@@ -14,7 +14,6 @@ const trainingSchema = new mongoose.Schema({
     youtube_link: {
         type: String,
     }
-   
 },{timestamps:true})
 
 /*****create module */

@@ -15,7 +15,7 @@ const webinarSchema = new mongoose.Schema({
         type: String,
         require: true,
     }
-   
+
 },{timestamps:true})
 
 /*****create module */

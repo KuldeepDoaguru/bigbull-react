@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.set('strictQuery', false);
+mongoose.set("strictQuery", false);
 
 /*****create connection to DB */
 mongoose
@@ -11,7 +11,6 @@ mongoose
   .then(() => {
     console.log("DB Connected");
   });
-
 
 // mongoose.connect("mongodb://localhost:27017/bigbullstrading").then(()=>{
 //     console.log("connection Successful");

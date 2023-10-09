@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from "react";
-import mainlogo from "../photos/mainlogo.jpg";
+import React, { useState } from "react";
+// import mainlogo from "../photos/mainlogo.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navigationbar.css";
 import Cookies from "js-cookie";
 import testimg from "../photos/no-profile.jpg";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+// import axios from "axios";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Navigationbar = () => {
   const navigate = useNavigate();
   const [userdetails, setuserDetails] = useState();
 
-  const user = Cookies.get("user");
-  let emailUser = null;
-  if (user != null) {
-    emailUser = JSON.parse(user).email;
-  }
+  // const user = Cookies.get("user");
+  // let emailUser = null;
+  // if (user !== null) {
+  //   emailUser = JSON.parse(user).email;
+  // }
   // console.log(emailUser)
-  useEffect(() => {
-    axios
-      .get(`/enroll/enroll/email/${emailUser}`)
-      .then((response) => {
-        setuserDetails([response.data[0]]);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [emailUser]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/enroll/enroll/email/${emailUser}`)
+  //     .then((response) => {
+  //       setuserDetails([response.data[0]]);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, [emailUser]);
 
   const logout = () => {
     try {
       Cookies.remove("user");
       userprofdropclose();
-      navigate("/home");
+      navigate("/");
       window.location.reload();
     } catch (err) {
       console.log(err.toString);
@@ -41,9 +41,9 @@ const Navigationbar = () => {
   };
 
   const mycookie = Cookies.get("user");
-  // if (userdetails) {
-  //     // console.log(userdetails)
-  // }
+  if (userdetails) {
+    console.log(userdetails);
+  }
 
   const hambtnactive = () => {
     let navToggler = document.querySelector(".nav-toggler");
@@ -78,10 +78,11 @@ const Navigationbar = () => {
     <>
       <nav onMouseLeave={userprofdropclose}>
         <div className="left">
-          <Link to="/home" onClick={userprofdrop}>
+          <Link to="/" onClick={userprofdrop}>
             <img
               src="https://res.cloudinary.com/antrix/image/upload/v1694006449/woj/music_n4gsan.png"
               style={{ width: "50px" }}
+              alt="userprofile"
             />
           </Link>
         </div>
@@ -89,11 +90,11 @@ const Navigationbar = () => {
           <div className="section-1">
             <div className="navlinks">
               <Link
-                to="/home"
+                to="/"
                 onClick={userprofdropclose}
                 style={{ textDecoration: "none" }}
               >
-                {location.pathname == "/home" ? (
+                {location.pathname === "/" ? (
                   <p className="active">Home</p>
                 ) : (
                   <p>Home</p>
@@ -105,7 +106,7 @@ const Navigationbar = () => {
                 onClick={userprofdropclose}
                 style={{ textDecoration: "none" }}
               >
-                {location.pathname == "/courses" ? (
+                {location.pathname === "/courses" ? (
                   <p className="active">Courses</p>
                 ) : (
                   <p>Courses</p>
@@ -117,7 +118,7 @@ const Navigationbar = () => {
                 onClick={userprofdropclose}
                 style={{ textDecoration: "none" }}
               >
-                {location.pathname == "/about" ? (
+                {location.pathname === "/about" ? (
                   <p className="active">About Us</p>
                 ) : (
                   <p>About Us</p>
@@ -128,7 +129,7 @@ const Navigationbar = () => {
                 onClick={userprofdropclose}
                 style={{ textDecoration: "none" }}
               >
-                {location.pathname == "/blogs" ? (
+                {location.pathname === "/blogs" ? (
                   <p className="active">Blogs</p>
                 ) : (
                   <p>Blogs</p>
@@ -139,7 +140,7 @@ const Navigationbar = () => {
                 onClick={userprofdropclose}
                 style={{ textDecoration: "none" }}
               >
-                {location.pathname == "/contact" ? (
+                {location.pathname === "/contact" ? (
                   <p className="active">Contact Us</p>
                 ) : (
                   <p>Contact Us</p>
@@ -148,7 +149,7 @@ const Navigationbar = () => {
             </div>
             <div className="navbtns">
               <Link to="/enrollnow" style={{ textDecoration: "none" }}>
-                {userdetails != undefined ? (
+                {userdetails !== undefined ? (
                   <></>
                 ) : (
                   <button variant="" className="text-capitalize" id="enroll">
@@ -157,7 +158,7 @@ const Navigationbar = () => {
                 )}
               </Link>
               <Link to="/login" style={{ textDecoration: "none" }}>
-                {userdetails != undefined ? (
+                {userdetails !== undefined ? (
                   <></>
                 ) : (
                   <button variant="" className="text-capitalize" id="login">
@@ -169,12 +170,12 @@ const Navigationbar = () => {
             </div>
           </div>
           <div className="section-2">
-            {userdetails != undefined ? (
+            {userdetails !== undefined ? (
               <button onClick={userprofdrop} className="userprofilebtn">
                 {userdetails && userdetails[0].user_image ? (
-                  <img src={userdetails[0].user_image} />
+                  <img src={userdetails[0].user_image} alt="user" />
                 ) : (
-                  <img src={testimg} />
+                  <img src={testimg} alt="user" />
                 )}
               </button>
             ) : (
@@ -213,7 +214,7 @@ const Navigationbar = () => {
           >
             <button>Affiliate Panel</button>
           </Link>
-          {mycookie != undefined ? (
+          {mycookie !== undefined ? (
             <button
               variant="outline-info"
               className="text-capitalize"

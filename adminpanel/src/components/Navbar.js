@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import mainlogo from '../images/logofull1.png'
+// import mainlogo from '../images/logofull1.png';
 import './Navbar.css'
 import Cookies from 'js-cookie';
 
 
 const Navbar = () => {
     const location = useLocation()
-    const userdata = Cookies.get("admin");
+    // const userdata = Cookies.get("admin");
     // console.log("userdata");
 
     // console.log(userdata);
@@ -37,7 +37,7 @@ const Navbar = () => {
             <div className='s1'>
                 <div className='left'>
                     <img src="/" alt='logo' />
-                    <Link to='/'>{location.pathname == '/' ?
+                    <Link to='/'>{location.pathname === '/' ?
                         <button className='iconbtn-active'>
 
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -58,7 +58,7 @@ const Navbar = () => {
                     }</Link>
 
 
-                    <Link to='/webinars'>{location.pathname == '/webinars' || location.pathname == '/marketingtools' || location.pathname == '/offer' || location.pathname == '/training' || location.pathname == '/homecarousel' ?
+                    <Link to='/webinars'>{location.pathname === '/webinars' || location.pathname === '/marketingtools' || location.pathname === '/offer' || location.pathname === '/training' || location.pathname === '/homecarousel' ?
                         <button className='iconbtn-active'>
 
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -78,7 +78,7 @@ const Navbar = () => {
                         </button>
                     }</Link>
 
-                    <Link to='/manageusers'>  {location.pathname == '/manageusers' ?
+                    <Link to='/manageusers'>  {location.pathname === '/manageusers' ?
                         <button className='iconbtn-active'>
 
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -97,7 +97,7 @@ const Navbar = () => {
                             </p>
                         </button>}</Link>
                     <Link to='/contact' style={{ textDecoration: 'none' }}>
-                        {location.pathname == '/contact' ?
+                        {location.pathname === '/contact' ?
                             <button className='iconbtn-active'>
 
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -117,7 +117,7 @@ const Navbar = () => {
                             </button>}
                     </Link>
                     <Link to='/payments' style={{ textDecoration: 'none' }}>
-                        {location.pathname == '/payments' ?
+                        {location.pathname === '/payments' ?
                             <button className='iconbtn-active'>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 5a1 1 0 100 2h1a2 2 0 011.732 1H7a1 1 0 100 2h2.732A2 2 0 018 11H7a1 1 0 00-.707 1.707l3 3a1 1 0 001.414-1.414l-1.483-1.484A4.008 4.008 0 0011.874 10H13a1 1 0 100-2h-1.126a3.976 3.976 0 00-.41-1H13a1 1 0 100-2H7z" clip-rule="evenodd" />
@@ -138,11 +138,11 @@ const Navbar = () => {
                 </div>
 
                 <div className='right'>
-                    <Link to='/leaderboard'><button className={location.pathname == '/leaderboard' ? 'btn-active' : 'btn-inactive'}>Leaderboard</button></Link>
-                    <Link to='/addcourse'><button className={location.pathname == '/addcourse' ? 'btn-active' : 'btn-inactive'}>Add Course</button></Link>
-                    <Link to='/managecourses'><button className={location.pathname == '/managecourses' ? 'btn-active' : 'btn-inactive'}>Manage Courses</button></Link>
-                    <Link to='/kycstatus'><button className={location.pathname == '/kycstatus' ? 'btn-active' : 'btn-inactive'}>Kyc Status</button></Link>
-                    {/* <Link to='/login'><button className={location.pathname == '/login' ? 'btn-active' : 'btn-inactive'}>login</button></Link> */}
+                    <Link to='/leaderboard'><button className={location.pathname === '/leaderboard' ? 'btn-active' : 'btn-inactive'}>Leaderboard</button></Link>
+                    <Link to='/addcourse'><button className={location.pathname === '/addcourse' ? 'btn-active' : 'btn-inactive'}>Add Course</button></Link>
+                    <Link to='/managecourses'><button className={location.pathname === '/managecourses' ? 'btn-active' : 'btn-inactive'}>Manage Courses</button></Link>
+                    <Link to='/kycstatus'><button className={location.pathname === '/kycstatus' ? 'btn-active' : 'btn-inactive'}>Kyc Status</button></Link>
+                    {/* <Link to='/login'><button className={location.pathname === '/login' ? 'btn-active' : 'btn-inactive'}>login</button></Link> */}
                     <button variant="outline-info" className='btn-inactive' onClick={logout}>Logout</button>
                 </div>
             </div>

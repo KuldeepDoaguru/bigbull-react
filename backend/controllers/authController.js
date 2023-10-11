@@ -1,7 +1,9 @@
 import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 // import { hashPassword } from "./../helper/authHelper.js";
 import JWT from "jsonwebtoken";
+import { otpModel } from "../models/otpModel.js";
 
 export const registerController = async (req, res) => {
   try {
@@ -80,6 +82,186 @@ export const registerController = async (req, res) => {
       success: false,
       message: "Error in registration",
       error: error.message,
+    });
+  }
+};
+
+export const loginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log(req.body);
+    //validation
+    if (!email || !password) {
+      return res.status(404).send({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    //check user
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "Email is not registered",
+      });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(200).send({
+        success: false,
+        message: "Invalid Password",
+      });
+    }
+
+    //token
+    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.status(200).send({
+      success: true,
+      message: "login successfully",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      },
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ success: false, message: "Error in login", error });
+  }
+};
+
+export const sendOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Generate a random OTP
+    function generateOTP(length) {
+      const chars = "0123456789";
+      let otp = "";
+
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        otp += chars[randomIndex];
+      }
+
+      return otp;
+    }
+
+    const OTP = generateOTP(6);
+
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAILSENDER,
+        pass: process.env.EMAILPASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAILSENDER,
+      to: email,
+      subject: "Password reset OTP",
+      text: `Your OTP for password reset is ${OTP}`,
+    };
+
+    transporter.sendMail(mailOptions, async (error, info) => {
+      if (error) {
+        console.error(error);
+        return res
+          .status(500)
+          .json({ message: "An error occurred while sending the email" });
+      } else {
+        console.log("OTP sent:", info.response);
+
+        try {
+          // Find the OTP document based on the email
+          let otpDocument = await otpModel.findOne({ email });
+
+          if (!otpDocument) {
+            otpDocument = new otpModel({
+              email,
+              code: OTP,
+              expiresIn: new Date().getTime() + 600000, // Set OTP expiration time (e.g., 10 minutes from now)
+            });
+          } else {
+            // Update the OTP code and expiresIn fields
+            otpDocument.code = OTP;
+            otpDocument.expiresIn = new Date().getTime() + 600000; // Update expiration time
+          }
+
+          // Save the document
+          await otpDocument.save();
+
+          return res.status(200).json({ message: "OTP sent successfully" });
+        } catch (error) {
+          console.error("Error updating OTP:", error);
+          return res.status(500).json({ message: "Failed to update OTP" });
+        }
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const { email, password, cpassword, otp } = req.body;
+    console.log(req.body);
+    if (!email || !password || !cpassword || !otp) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email, password, or OTP",
+      });
+    }
+
+    // Fetch the user based on the provided email
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // otpmatch
+    const otpDocument = await otpModel.findOne({ email });
+    if (!otpDocument || otpDocument.code !== otp) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP",
+      });
+    }
+
+    // Hash both the "password" and "cpassword"
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedCPassword = await bcrypt.hash(cpassword, saltRounds);
+
+    await userModel.findByIdAndUpdate(user._id, {
+      password: hashedPassword,
+      cpassword: hashedCPassword,
+    });
+    res.status(200).send({
+      success: true,
+      message: "Password Reset Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong",
+      error,
     });
   }
 };

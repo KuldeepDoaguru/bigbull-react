@@ -1,89 +1,63 @@
-import React, { useState } from 'react'
-import contactpic from '../photos/contactuspic.png'
-import axios from 'axios';
-import Fp2 from './Fp2'
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import contactpic from "../photos/contactuspic.png";
+import axios from "axios";
+import Fp2 from "./Fp2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import cogoToast from "cogo-toast";
+import { useNavigate } from "react-router-dom";
 
 const Fp = () => {
-    const [email, setEmail] = useState('');
-    const [fpForm, showForm] = useState(true);
-        
-    const sendCode = (e) => {
-        e.preventDefault();
-        if (email) {
-            axios.post(`otp/emailSend`,
-                JSON.stringify({ email }), {
-                headers: { "Content-Type": "application/json", 'Accept': 'application/json' }
-            }).then((response) => {
-                showForm(false)
-            }).catch((e) => {
-                toast.error(e.response.data+'💀', {
-                    position: "top-center",
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    theme: 'colored'
-                });
-                if (e.response.status === (400)) {
-                    toast.error(e.response.data+'💀', {
-                        position: "top-center",
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        theme: 'colored'
-                    });
-                } else if (e.response.status === (404)) {                    
-                    toast.error(e.response.data+'💀', {
-                        position: "top-center",
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        theme: 'colored'
-                    });
-                } else {
-                    toast.error(e, {
-                        position: "top-center",
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        theme: 'colored'
-                    });
-                }
-            })
-        } else {
-            toast.error("email required...", {
-                position: "top-center",
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                theme: 'colored'
-            });
-        }
-    }
-    return (
-        <>
-        <div className='contact-outer'>
-            <div className='contact-inner'>
-                <p>Forgot Password</p>
-                <div className='contact-innermost'>
-                    <img src={contactpic} />
-                    {fpForm ? <form>
-                        <p>Verify Yourself</p>
-                        <input type="email" name='email' id="username"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder='Email' />
-                        <button onClick={sendCode}>Send Code</button>
-                    </form>
-                        :
-                        <Fp2 email={email} />
-                    }
-                </div>
-            </div>
-        </div><ToastContainer /></>
-    )
-}
+  const [email, setEmail] = useState("");
+  const [fpForm, showForm] = useState(true);
+  const navigate = useNavigate();
+  console.log(fpForm);
+  const sendCode = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/sendOtp",
+        { email }
+      );
 
-export default Fp
+      console.log(response);
+      cogoToast.success("OTP sent successfully");
+      //   navigate("/newpassword");
+      showForm(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return (
+    <>
+      <div className="contact-outer pt-5">
+        {fpForm ? (
+          <div className="contact-inner mt-3">
+            <p>Forgot Password</p>
+            <div className="contact-innermost">
+              <img src={contactpic} />
+
+              <form onSubmit={sendCode}>
+                <p>Verify Yourself</p>
+                <input
+                  type="email"
+                  name="email"
+                  id="username"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                />
+                <button type="submit">Send Code</button>
+              </form>
+            </div>
+          </div>
+        ) : (
+          <Fp2 email={email} />
+        )}
+      </div>
+      <ToastContainer />
+    </>
+  );
+};
+
+export default Fp;

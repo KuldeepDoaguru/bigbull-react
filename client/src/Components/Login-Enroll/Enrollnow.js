@@ -13,16 +13,17 @@ import "react-datepicker/dist/react-datepicker.css";
 const Enrollnow = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
+    name: "",
     email: "",
-    mobileNo: "",
+    phone: "",
     gender: "",
-    address: "",
-    dob: "",
-    pwd: "",
-    cpwd: "",
+    password: "",
+    cpassword: "",
     country: "",
     state: "",
-    referredCode: "",
+    address: "",
+    dob: "",
+    refferelCode: "",
   });
 
   const handleInputChange = (event) => {
@@ -47,13 +48,6 @@ const Enrollnow = () => {
   const register = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-
-    // Append user.data fields to formData
-    for (const key in data) {
-      formData.append(key, data[key]);
-    }
-
     const toastOptions = {
       position: "top-center",
       hideProgressBar: false,
@@ -64,13 +58,13 @@ const Enrollnow = () => {
 
     if (!data.email) {
       toast.error("Email is required!", toastOptions);
-    } else if (!data.mobileNo) {
+    } else if (!data.phone) {
       toast.warn("Mobile number is required!", toastOptions);
-    } else if (!data.pwd) {
+    } else if (!data.password) {
       toast.warn("Password is required!", toastOptions);
     } else if (!data.state) {
       toast.warn("state is required", toastOptions);
-    } else if (data.pwd !== data.cpwd) {
+    } else if (data.password !== data.cpassword) {
       toast.error("Password and confirm password do not match", toastOptions);
     } else if (!data.name) {
       toast.error("name is required", toastOptions);
@@ -86,11 +80,11 @@ const Enrollnow = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/enroll/enroll",
-        formData,
+        "http://localhost:8080/api/v1/auth/register",
+        data,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -120,7 +114,7 @@ const Enrollnow = () => {
             <div className="outer-enrollnow-container">
               <div className="enrollnow-container">
                 <div className="enrollnow-left">
-                  <img src={logoimg} />
+                  <img src={logoimg} alt="user" />
                 </div>
 
                 <div className="enrollnow-right">
@@ -155,10 +149,10 @@ const Enrollnow = () => {
                         <label>Enter Mobile number</label>
                         <input
                           type="number"
-                          name="mobileNo"
-                          value={data.mobileNo}
+                          name="phone"
+                          value={data.phone}
                           onChange={handleInputChange}
-                          placeholder="Enter your 10 digit Mobile mobileNo"
+                          placeholder="Enter your 10 digit Mobile phone"
                         />
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -179,23 +173,23 @@ const Enrollnow = () => {
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <label>Create password</label>
                         <input
-                          name="pwd"
-                          value={data.pwd}
+                          name="password"
+                          value={data.password}
                           onChange={handleInputChange}
                           className="inputsel"
                           type="password"
                           placeholder="Enter Password"
-                          id="pwd"
+                          id="password"
                         />
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <label>Confirm password</label>
                         <input
                           type="password"
-                          name="cpwd"
+                          name="cpassword"
                           placeholder="Enter Password"
-                          id="cpwd"
-                          value={data.cpwd}
+                          id="cpassword"
+                          value={data.cpassword}
                           className="inputsel"
                           onChange={handleInputChange}
                         />
@@ -265,8 +259,8 @@ const Enrollnow = () => {
 
                   <br />
                   <input
-                    name="referredCode"
-                    value={data.referredCode}
+                    name="refferelCode"
+                    value={data.refferelCode}
                     onChange={handleInputChange}
                     placeholder="Enter Referral Code"
                     type="text"

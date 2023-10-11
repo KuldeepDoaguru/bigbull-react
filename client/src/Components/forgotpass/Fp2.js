@@ -1,110 +1,90 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import contactpic from '../photos/contactuspic.png'
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import contactpic from "../photos/contactuspic.png";
+import cogoToast from "cogo-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Fp2 = (props) => {
-    const navigate = useNavigate();
-    const [pwd, setPwd] = useState('');
-    const [cpwd, setCpwd] = useState('');
-    const [code, setCode] = useState('');
+  const [pwd, setPwd] = useState("");
+  const [cpwd, setCpwd] = useState("");
+  const [code, setCode] = useState("");
+  const navigate = useNavigate();
+  console.log(props.email);
 
-    const changePassword = (e) => {
-        const email = props.email;
-        e.preventDefault();
-        if (pwd && cpwd && code) {
-            if (comparePassword()) {
-                axios.post(`otp/changePassword`,
-                    JSON.stringify({ email, code, pwd }), {
-                    headers: { "Content-Type": "application/json", 'Accept': 'application/json' }
-                }).then((response) => {
-                    navigate('/login')
-                }).catch((e) => {
-                    if (e.response.status === (400)) {
-                        toast.error(e.response.data + '💀', {
-                            position: "top-center",
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            theme: 'colored'
-                        });
-                    } else {
-                        toast.error(e, {
-                            position: "top-center",
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            theme: 'colored'
-                        });
-                    }
-                })
-            } else {
-                toast.error("password and confirm password should be matched...", {
-                    position: "top-center",
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    theme: 'colored'
-                });
-            }
+  const changePassword = async (e) => {
+    const email = props.email;
+    e.preventDefault();
+    try {
+      if (pwd === cpwd) {
+        const response = await axios.post(
+          "http://localhost:8080/api/v1/auth/updatePassword",
+          {
+            email,
+            password: pwd,
+            cpassword: cpwd,
+            otp: code,
+          }
+        );
 
-        } else {
-            toast.error("all fields are required", {
-                position: "top-center",
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                theme: 'colored'
-            });
-        }
-
+        console.log(response);
+        navigate("/login");
+        window.location.reload()
+        cogoToast.success("password update successfully");
+      } else {
+        cogoToast.error("password and confirm password do not match");
+      }
+    } catch (error) {
+      console.log(error);
     }
-    const comparePassword = (e) => {
-        const a = document.getElementById('pwd').value
-        const b = document.getElementById('cpwd').value
-        if (a == b) {
-            return true;
-        }
-    }
+  };
 
-    return (
-        <>
-            <div className='contact-outer'>
-                <div className='contact-inner'>
-                    <p>Forgot Password</p>
-                    <div className='contact-innermost'>
-                        <img src={contactpic} />
-                        <form>
-                            <p>Reset Password</p>
-                            <input name="pwd"
-                                value={pwd}
-                                onChange={(e) => setPwd(e.target.value)}
-                                id="pwd"
-                                placeholder='New Password'
-                                type={'password'} />
+  return (
+    <>
+      <div className="contact-outer">
+        <div className="contact-inner pt-5">
+          <p>Forgot Password</p>
+          <div className="contact-innermost">
+            <img src={contactpic} />
+            <form>
+              <p>Reset Password</p>
+              <input
+                name="pwd"
+                value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
+                id="pwd"
+                placeholder="New Password"
+                type={"password"}
+              />
 
-                            <input name="cpwd"
-                                value={cpwd}
-                                onChange={(e) => setCpwd(e.target.value)}
-                                id="cpwd"
-                                placeholder='Confirm Password'
-                                type={'password'} />
+              <input
+                name="cpwd"
+                value={cpwd}
+                onChange={(e) => setCpwd(e.target.value)}
+                id="cpwd"
+                placeholder="Confirm Password"
+                type={"password"}
+              />
 
-                            <input name="code"
-                                value={code}
-                                onChange={(e) => setCode(e.target.value)}
-                                placeholder='Enter Verification Code'
-                                type={'text'} />
+              <input
+                name="code"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                placeholder="Enter Verification Code"
+                type={"text"}
+              />
 
-                            <button onClick={changePassword} style={{ width: '200px' }}>Change Password</button>
-                        </form>
-                    </div>
-                </div>
-            </div><ToastContainer /></>
-    )
-}
+              <button onClick={changePassword} style={{ width: "200px" }}>
+                Change Password
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <ToastContainer />
+    </>
+  );
+};
 
-export default Fp2
+export default Fp2;

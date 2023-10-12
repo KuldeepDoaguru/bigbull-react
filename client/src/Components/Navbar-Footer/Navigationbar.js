@@ -28,12 +28,13 @@ const Navigationbar = () => {
     { text: "Contact", path: "/contact" },
   ];
 
+  const authToken = Cookies.get("authToken");
   return (
     <>
       <Container>
         <nav class="navbar navbar-expand-lg">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
               Navbar
             </a>
             <button
@@ -63,7 +64,7 @@ const Navigationbar = () => {
                 ))}
               </ul>
               <div class="d-flex" role="search">
-                {user.id !== null ? (
+                {authToken ? (
                   <>
                     <Link className="nav-link" to="/enrollnow">
                       My Learning
@@ -78,18 +79,18 @@ const Navigationbar = () => {
                     <Link className="nav-link" to="/login">
                       <BsBell className="icons" />
                     </Link>
-                    <Link className="nav-link" to="/login">
+                    <Link className="nav-link" to="/edit-profile">
                       <div class="icon-container">
                         <RxAvatar className="icons" />
-                        <ul class="list">
+                        <ul class="list rounded">
                           <li>
-                            <div className="d-flex">
+                            <div className="d-flex justify-content-around">
                               <div>
                                 <RxAvatar className="icons-user" />
                               </div>
-                              <div>
+                              <div className="ml-1">
                                 <p
-                                  className="fw-bold m-0"
+                                  className="fw-bold m-0 fs-5"
                                   style={{ color: "black" }}
                                 >
                                   {user.name}
@@ -103,8 +104,24 @@ const Navigationbar = () => {
                           <li>
                             <hr class="dropdown-divider" />
                           </li>
-                          <li>List Item 2</li>
-                          <li>List Item 3</li>
+                          <li>Notifications</li>
+                          <li>Messages</li>
+                          <li>
+                            <hr class="dropdown-divider" />
+                          </li>
+                          <li>Account Settings</li>
+                          <li>Payment Methods</li>
+                          <li>Purchase History</li>
+                          <li>
+                            <hr class="dropdown-divider" />
+                          </li>
+                          <li>Public Profile</li>
+                          <li>Edit Profile</li>
+                          <li>
+                            <hr class="dropdown-divider" />
+                          </li>
+                          <li>Help</li>
+                          <li>Logout</li>
                         </ul>
                       </div>
                     </Link>
@@ -166,8 +183,13 @@ const Container = styled.div`
     border: 1px solid #ccc; /* Add a border for styling */
     list-style: none; /* Remove the list bullets */
     padding: 0.5rem; /* Remove padding */
-    width: 200px;
+    width: 240px;
     right: 0; /* Reset any right positioning */
+    li {
+      color: #7f8fa6;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
   }
 
   .icon-container:hover .list {

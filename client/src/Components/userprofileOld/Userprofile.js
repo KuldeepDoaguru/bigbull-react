@@ -19,6 +19,6 @@ const Userprofile = () => {
 
 export default Userprofile;
 const Container = styled.div`
-  height: 100vh;
+  height: 100%;
   background: black;
 `;

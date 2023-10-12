@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import cogoToast from "cogo-toast";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/UserSlices";
+
 // import { setUser } from "./userSlice";
 
 const Login = () => {
@@ -40,20 +41,24 @@ const Login = () => {
         }
       );
 
-      console.log(response.data.user._id);
+      console.log(response.data);
       cogoToast.success("Login Successfull");
-
+      Cookies.set("authToken", response.data.token, { expires: 7 });
       const userData = {
         name: response.data.user.name,
         id: response.data.user._id,
       };
+      localStorage.setItem("userData", JSON.stringify(userData));
       dispatch(setUser(userData));
-      navigate("/userprofile");
+
+      navigate("/edit-profile");
     } catch (error) {
       console.log(error);
       cogoToast.error("error:", error);
     }
   };
+
+  const authToken = Cookies.get("authToken");
 
   return (
     <>

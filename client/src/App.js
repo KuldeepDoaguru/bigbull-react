@@ -14,11 +14,11 @@ import Auth from "./Components/Login-Enroll/Auth";
 // import Layout from './Components/Layout'
 import Blogpage from "./Components/Blogs/Blogpage";
 
-import Userprofile from "./Components/userprofile/Userprofile";
-import Invoice from "./Components/userprofile/Invoice";
-import PrintInvoice from "./Components/userprofile/PrintInvoice";
-import Changeprofileimage from "./Components/userprofile/Changeprofileimage";
-import Changepassword from "./Components/userprofile/Changepassword";
+import Userprofile from "./Components/userprofileOld/Userprofile";
+import Invoice from "./Components/userprofileOld/Invoice";
+import PrintInvoice from "./Components/userprofileOld/PrintInvoice";
+import Changeprofileimage from "./Components/userprofileOld/Changeprofileimage";
+import Changepassword from "./Components/userprofileOld/Changepassword";
 import Mycourses from "./Components/Our-My-Courses/Mycourses";
 
 import AffiliateDashboard from "./Components/Affiliatepanel/AffiliateDashboard";
@@ -42,9 +42,22 @@ import ScrollToTop from "./ScrollToTop";
 // import Privacy_policy from './Components/Terms&Conditions/PrivacyPolicy';
 import Productslider2 from "./Components/product-slider/productslider2";
 import PrivacyPolicy from "./Components/Terms&Conditions/PrivacyPolicy";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./redux/slices/UserSlices";
+import EditProfile from "./Pages/EditProfile";
+import UpdateProfile from "./Components/userprofilesection/UpdateProfile";
+import ProfilePublic from "./Components/userprofilesection/ProfilePublic";
 // import SendOtp from "./Components/forgotpass/SendOtp.js";
 // import ResetPassOtp from "./Components/forgotpass/ResetPassOtp";
 function App() {
+  const storedUserData = localStorage.getItem("userData");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  if (storedUserData) {
+    const userData = JSON.parse(storedUserData);
+    dispatch(setUser(userData));
+  }
   return (
     <div>
       <>
@@ -84,6 +97,14 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<FOF />} />
           <Route path="/enrollnow" element={<Enrollnow />} />
+          {user ? (
+            <>
+              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/public-view-profile" element={<ProfilePublic />} />
+            </>
+          ) : (
+            <></>
+          )}
         </Routes>
         <Footer />
       </>

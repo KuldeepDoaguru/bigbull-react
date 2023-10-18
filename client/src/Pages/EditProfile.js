@@ -40,6 +40,11 @@ const EditProfile = () => {
                           </Link>
                         </Nav.Item>
                         <Nav.Item>
+                          <Link to="/subscription" className="navlink">
+                            Subscriptions
+                          </Link>
+                        </Nav.Item>
+                        <Nav.Item>
                           <Nav.Link eventKey="tab2" className="navlink">
                             Profile
                           </Nav.Link>
@@ -49,13 +54,9 @@ const EditProfile = () => {
                             Profile Photo
                           </Nav.Link>
                         </Nav.Item>
+
                         <Nav.Item>
-                          <Nav.Link eventKey="tab4" className="navlink">
-                            Subscriptions
-                          </Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                          <Nav.Link eventKey="tab4" className="navlink">
+                          <Nav.Link eventKey="tab5" className="navlink">
                             Delete Account
                           </Nav.Link>
                         </Nav.Item>

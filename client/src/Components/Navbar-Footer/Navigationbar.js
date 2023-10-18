@@ -161,6 +161,9 @@ const Container = styled.div`
   .nav-link {
     color: #f8c291;
     font-weight: bold;
+    background: #000;
+    margin-left: 1rem;
+    border-radius: 5px;
   }
   .active {
     color: yellow;

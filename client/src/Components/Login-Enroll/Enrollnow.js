@@ -106,10 +106,8 @@ const Enrollnow = () => {
   return (
     <>
       <Container>
-        <div>
-          <img src={enroll} alt="about" />
-        </div>
-        <div className="pb-3 mb-5">
+        <div>{/* <img src={enroll} alt="about" /> */}</div>
+        <div className="mt-5 mb-5">
           <form onSubmit={register}>
             <div className="outer-enrollnow-container">
               <div className="enrollnow-container">

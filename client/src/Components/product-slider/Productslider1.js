@@ -1,6 +1,8 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Styled from "styled-components";
+import { BsSuitHeartFill, BsCart3, BsBell } from "react-icons/bs";
+
 function Productslider1() {
   return (
     <>
@@ -151,79 +153,203 @@ function Productslider1() {
             >
               <div className="card-group">
                 <div className="card course-card d-flex mr-3 border">
-                  <img
-                    src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
-                    class="card-img-top"
-                    alt="Video Thumbnail"
-                  />
-                  <video class="card-img-overlay">
-                    <source src="your-video.mp4" type="video/mp4" />
-                  </video>
-                  <div className="card-body">
-                    <h5 className="card-title">Ultimate Financial Course</h5>
-                    <p>Bigbull</p>
-                    <h5>4.9 *****</h5>
-                    <h5>Price - ₹10000</h5>
-                    <a href="/" className="btn btn-primary" id="bgs">
-                      Buy Now
-                    </a>
+                  <div className="relative">
+                    <img
+                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                      className="card-img-top"
+                      alt="Video Thumbnail"
+                    />
+                    <div
+                      className="absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    >
+                      <div className="relative">
+                        <BsSuitHeartFill className="icons" />
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        Ultimate Financial Course
+                      </h5>
+                      <p className="text-center">Bigbull</p>
+                      <div>
+                        <h5 className="text-center  ">4.9</h5>
+                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="far fa-star fa-sm"></i>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h5 className="text-center">Price - ₹10000</h5>
+                      <div className="d-flex justify-content-center">
+                        <a href="/" className="btn btn-primary mt-1">
+                          Add to Cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="card course-card d-flex mr-3 border">
-                  <img
-                    src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
-                    class="card-img-top"
-                    alt="Video Thumbnail"
-                  />
-                  <video class="card-img-overlay">
-                    <source src="your-video.mp4" type="video/mp4" />
-                  </video>
-                  <div className="card-body">
-                    <h5 className="card-title">Ultimate Financial Course</h5>
-                    <p>Bigbull</p>
-                    <h5>4.9 *****</h5>
-                    <h5>Price - ₹10000</h5>
-                    <a href="/" className="btn btn-primary" id="bgs">
-                      Buy Now
-                    </a>
+                  <div className="relative">
+                    <img
+                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                      className="card-img-top"
+                      alt="Video Thumbnail"
+                    />
+                    <div
+                      className="absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    >
+                      <div className="relative">
+                        <BsSuitHeartFill className="icons" />
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        Ultimate Financial Course
+                      </h5>
+                      <p className="text-center">Bigbull</p>
+                      <div>
+                        <h5 className="text-center  ">4.9</h5>
+                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="far fa-star fa-sm"></i>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h5 className="text-center">Price - ₹10000</h5>
+                      <div className="d-flex justify-content-center">
+                        <a href="/" className="btn btn-primary mt-1">
+                          Add to Cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="card course-card d-flex mr-3 border">
-                  <img
-                    src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
-                    class="card-img-top"
-                    alt="Video Thumbnail"
-                  />
-                  <video class="card-img-overlay">
-                    <source src="your-video.mp4" type="video/mp4" />
-                  </video>
-                  <div className="card-body">
-                    <h5 className="card-title">Ultimate Financial Course</h5>
-                    <p>Bigbull</p>
-                    <h5>4.9 *****</h5>
-                    <h5>Price - ₹10000</h5>
-                    <a href="/" className="btn btn-primary" id="bgs">
-                      Buy Now
-                    </a>
+                  <div className="relative">
+                    <img
+                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                      className="card-img-top"
+                      alt="Video Thumbnail"
+                    />
+                    <div
+                      className="absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    >
+                      <div className="relative">
+                        <BsSuitHeartFill className="icons" />
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        Ultimate Financial Course
+                      </h5>
+                      <p className="text-center">Bigbull</p>
+                      <div>
+                        <h5 className="text-center  ">4.9</h5>
+                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="far fa-star fa-sm"></i>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h5 className="text-center">Price - ₹10000</h5>
+                      <div className="d-flex justify-content-center">
+                        <a href="/" className="btn btn-primary mt-1">
+                          Add to Cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="card course-card d-flex mr-3 border">
-                  <img
-                    src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
-                    class="card-img-top"
-                    alt="Video Thumbnail"
-                  />
-                  <video class="card-img-overlay">
-                    <source src="your-video.mp4" type="video/mp4" />
-                  </video>
-                  <div className="card-body">
-                    <h5 className="card-title">Ultimate Financial Course</h5>
-                    <p>Bigbull</p>
-                    <h5>4.9 *****</h5>
-                    <h5>Price - ₹10000</h5>
-                    <a href="/" className="btn btn-primary" id="bgs">
-                      Buy Now
-                    </a>
+                  <div className="relative">
+                    <img
+                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                      className="card-img-top"
+                      alt="Video Thumbnail"
+                    />
+                    <div
+                      className="absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    >
+                      <div className="relative">
+                        <BsSuitHeartFill className="icons" />
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        Ultimate Financial Course
+                      </h5>
+                      <p className="text-center">Bigbull</p>
+                      <div>
+                        <h5 className="text-center  ">4.9</h5>
+                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="far fa-star fa-sm"></i>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h5 className="text-center">Price - ₹10000</h5>
+                      <div className="d-flex justify-content-center">
+                        <a href="/" className="btn btn-primary mt-1">
+                          Add to Cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -235,68 +361,204 @@ function Productslider1() {
               aria-labelledby="pills-java-tab"
             >
               <div className="card-group">
-                <div className="card d-flex mr-3 shadow ">
-                  <img
-                    src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                    className="card-img-top"
-                    alt="Video Thumbnail"
-                  />
-                  <video className="card-img-overlay">
-                    <source src="your-video.mp4" type="video/mp4" />
-                  </video>
-                  <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <a href="/" className="btn btn-primary">
-                      Go somewhere
-                    </a>
+                <div className="card course-card d-flex mr-3 border">
+                  <div className="relative">
+                    <img
+                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                      className="card-img-top"
+                      alt="Video Thumbnail"
+                    />
+                    <div
+                      className="absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    >
+                      <div className="relative">
+                        <BsSuitHeartFill className="icons" />
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        Ultimate Financial Course
+                      </h5>
+                      <p className="text-center">Bigbull</p>
+                      <div>
+                        <h5 className="text-center  ">4.9</h5>
+                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="far fa-star fa-sm"></i>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h5 className="text-center">Price - ₹10000</h5>
+                      <div className="d-flex justify-content-center">
+                        <a href="/" className="btn btn-primary mt-1">
+                          Add to Cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="card d-flex mr-3 shadow ">
-                  <img
-                    src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                    className="card-img-top"
-                    alt="Video Thumbnail"
-                  />
-                  <video className="card-img-overlay">
-                    <source src="your-video.mp4" type="video/mp4" />
-                  </video>
-                  <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <a href="/" className="btn btn-primary" id="bgs">
-                      Go somewhere
-                    </a>
+                <div className="card course-card d-flex mr-3 border">
+                  <div className="relative">
+                    <img
+                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                      className="card-img-top"
+                      alt="Video Thumbnail"
+                    />
+                    <div
+                      className="absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    >
+                      <div className="relative">
+                        <BsSuitHeartFill className="icons" />
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        Ultimate Financial Course
+                      </h5>
+                      <p className="text-center">Bigbull</p>
+                      <div>
+                        <h5 className="text-center  ">4.9</h5>
+                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="far fa-star fa-sm"></i>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h5 className="text-center">Price - ₹10000</h5>
+                      <div className="d-flex justify-content-center">
+                        <a href="/" className="btn btn-primary mt-1">
+                          Add to Cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="card d-flex mr-3 shadow">
-                  <img
-                    src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                    className="card-img-top"
-                    alt="Video Thumbnail"
-                  />
-                  <video className="card-img-overlay">
-                    <source src="your-video.mp4" type="video/mp4" />
-                  </video>
-                  <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <a href="/" className="btn btn-primary">
-                      Go somewhere
-                    </a>
+                <div className="card course-card d-flex mr-3 border">
+                  <div className="relative">
+                    <img
+                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                      className="card-img-top"
+                      alt="Video Thumbnail"
+                    />
+                    <div
+                      className="absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    >
+                      <div className="relative">
+                        <BsSuitHeartFill className="icons" />
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        Ultimate Financial Course
+                      </h5>
+                      <p className="text-center">Bigbull</p>
+                      <div>
+                        <h5 className="text-center  ">4.9</h5>
+                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="far fa-star fa-sm"></i>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h5 className="text-center">Price - ₹10000</h5>
+                      <div className="d-flex justify-content-center">
+                        <a href="/" className="btn btn-primary mt-1">
+                          Add to Cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="card d-flex mr-3 shadow ">
-                  <img
-                    src="https://res.cloudinary.com/dwivqhrnx/image/upload/v1695824574/headerimage-98_uscnih.jpg"
-                    className="card-img-top"
-                    alt="Video Thumbnail"
-                  />
-                  <video className="card-img-overlay">
-                    <source src="your-video.mp4" type="video/mp4" />
-                  </video>
-                  <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <a href="/" className="btn btn-primary">
-                      Go somewhere
-                    </a>
+                <div className="card course-card d-flex mr-3 border">
+                  <div className="relative">
+                    <img
+                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                      className="card-img-top"
+                      alt="Video Thumbnail"
+                    />
+                    <div
+                      className="absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    >
+                      <div className="relative">
+                        <BsSuitHeartFill className="icons" />
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        Ultimate Financial Course
+                      </h5>
+                      <p className="text-center">Bigbull</p>
+                      <div>
+                        <h5 className="text-center  ">4.9</h5>
+                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="fas fa-star fa-sm"></i>
+                          </li>
+                          <li>
+                            <i className="far fa-star fa-sm"></i>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h5 className="text-center">Price - ₹10000</h5>
+                      <div className="d-flex justify-content-center">
+                        <a href="/" className="btn btn-primary mt-1">
+                          Add to Cart
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="card d-flex mr-3 shadow">
@@ -963,7 +1225,7 @@ const Container = Styled.div`
   }
 
   .course-card {
-    height: 27rem !important;
+    height: 29rem !important;
     width:100%;
   }
   h5 {
@@ -973,6 +1235,11 @@ const Container = Styled.div`
   }
   p {
     margin: 0;
+  }
+
+  .icons {
+    font-size: 1.5rem;
+    color: white;
   }
   
 `;

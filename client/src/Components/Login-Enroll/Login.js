@@ -42,7 +42,7 @@ const Login = () => {
       );
 
       console.log(response.data);
-      cogoToast.success("Login Successfull");
+
       Cookies.set("authToken", response.data.token, { expires: 7 });
       const userData = {
         name: response.data.user.name,
@@ -50,7 +50,7 @@ const Login = () => {
       };
       localStorage.setItem("userData", JSON.stringify(userData));
       dispatch(setUser(userData));
-
+      cogoToast.success("Login Successfull");
       navigate("/edit-profile");
     } catch (error) {
       console.log(error);

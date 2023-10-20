@@ -56,10 +56,10 @@ const Footer = () => {
                   <Link to="/about">About</Link>
                 </li>
                 <li onClick={handleTop}>
-                  <Link to="/founder">Founder</Link>
+                  <Link to="/courses">Courses</Link>
                 </li>
                 <li onClick={handleTop}>
-                  <Link to="/gallery">Gallery</Link>
+                  <Link to="/blogs">Blogs</Link>
                 </li>
                 <li onClick={handleTop}>
                   <Link to="/contact">Contact</Link>
@@ -142,7 +142,7 @@ const Container = styled.div`
       li {
         list-style: none;
         font-size: 1.5rem;
-       
+
         a {
           text-decoration: none;
           color: #4244ad;

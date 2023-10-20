@@ -11,7 +11,7 @@ const Blogpage = () => {
     <>
       <Container>
         <div className="mainbanner">
-          <img src={blogbanner} alt="about" />
+          {/* <img src={blogbanner} alt="about" /> */}
         </div>
         <div className="coursepage">
           <div className="container my-5 mb-5">

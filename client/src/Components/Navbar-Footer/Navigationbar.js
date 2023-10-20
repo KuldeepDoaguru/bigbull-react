@@ -28,7 +28,29 @@ const Navigationbar = () => {
     { text: "Contact", path: "/contact" },
   ];
 
+  console.log(user);
+
   const authToken = Cookies.get("authToken");
+
+  const logoutHandler = () => {
+    try {
+      sessionStorage.clear();
+
+      // Remove cookies
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const cookieName = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
+      localStorage.removeItem("auth");
+      // navigate("/gallery-login");
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Container>
@@ -53,7 +75,7 @@ const Navigationbar = () => {
                 {navLinks.map((link, index) => (
                   <li className="nav-item" key={index}>
                     <Link
-                      className={`nav-link ${
+                      className={`nav-link navLk ${
                         location.pathname === link.path ? "active" : ""
                       }`}
                       to={link.path}
@@ -66,10 +88,10 @@ const Navigationbar = () => {
               <div class="d-flex" role="search">
                 {authToken ? (
                   <>
-                    <Link className="nav-link" to="/enrollnow">
+                    <Link className="nav-link subLink" to="/enrollnow">
                       My Learning
                     </Link>
-                    <Link className="nav-link" to="/login">
+                    <Link className="nav-link" to="/whishlist">
                       <BsSuitHeart className="icons" />
                     </Link>
                     <Link className="nav-link" to="/login">
@@ -121,7 +143,14 @@ const Navigationbar = () => {
                             <hr class="dropdown-divider" />
                           </li>
                           <li>Help</li>
-                          <li>Logout</li>
+                          <li>
+                            <button
+                              className="btn btn-danger"
+                              onClick={logoutHandler}
+                            >
+                              Logout
+                            </button>{" "}
+                          </li>
                         </ul>
                       </div>
                     </Link>
@@ -155,15 +184,18 @@ const Container = styled.div`
     }
   }
   nav {
-    background: transparent;
-    position: absolute;
+    background: #269edf;
   }
   .nav-link {
     color: #f8c291;
     font-weight: bold;
-    background: #000;
-    margin-left: 1rem;
-    border-radius: 5px;
+    // background: #000;
+    // margin-left: 1rem;
+    // border-radius: 5px;
+  }
+  .navLk {
+    color: #f8c291;
+    font-weight: bold;
   }
   .active {
     color: yellow;
@@ -171,6 +203,7 @@ const Container = styled.div`
   }
   .icons {
     font-size: 1.5rem;
+    font-weight: bold;
   }
 
   .icon-container {

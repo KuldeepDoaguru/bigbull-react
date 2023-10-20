@@ -48,6 +48,7 @@ import EditProfile from "./Pages/EditProfile";
 import UpdateProfile from "./Components/userprofilesection/UpdateProfile";
 import ProfilePublic from "./Components/userprofilesection/ProfilePublic";
 import Subscription from "./Pages/Subscription";
+import Whishlist from "./Pages/Whishlist";
 // import SendOtp from "./Components/forgotpass/SendOtp.js";
 // import ResetPassOtp from "./Components/forgotpass/ResetPassOtp";
 function App() {
@@ -103,6 +104,7 @@ function App() {
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/public-view-profile" element={<ProfilePublic />} />
               <Route path="/subscription" element={<Subscription />} />
+              <Route path="/whishlist" element={<Whishlist />} />
             </>
           ) : (
             <></>

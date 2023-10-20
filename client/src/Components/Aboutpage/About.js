@@ -6,9 +6,7 @@ function Aboutus() {
   return (
     <>
       <Container>
-        <div>
-          <img src={aboutbanner} alt="about" />
-        </div>
+        <div>{/* <img src={aboutbanner} alt="about" /> */}</div>
         <div className="container-fluid bgColor">
           <div className="row my-5 ms-5 me-5">
             <div className="col-sm-6">
@@ -195,29 +193,21 @@ function Aboutus() {
               data-bs-ride="carousel"
             >
               <div>
-                <div>
-                  <div className="row ms-5 me-5">
+                <div className="container">
+                  <div className="row">
                     <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-                      <div className="card border shadow h-100 mr-5 mx-5">
+                      <div className="card border shadow h-100 w-100">
                         <div className="d-flex justify-content-center">
                           <img
                             class="rounded-circle shadow-1-strong m-3"
                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp"
                             alt="avatar"
-                            style={{ width: "150px" }}
                           />
                         </div>
                         <div class="row d-flex justify-content-center">
                           <div className="">
                             <h5>Anna Deynah</h5>
                             <p>UX Designer</p>
-                            <p class="text-justify">
-                              your project involves creating complex,
-                              interactive, and data-driven web applications,
-                              ReactJS is an excellent choice. It excels in
-                              handling real-time updates, dynamic content, and
-                              single-page applications (SPAs).
-                            </p>
                             <ul class="list-unstyled d-flex justify-content-center text-warning mb-1">
                               <li>
                                 <i class="fas fa-star fa-sm"></i>
@@ -235,31 +225,30 @@ function Aboutus() {
                                 <i class="far fa-star fa-sm"></i>
                               </li>
                             </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-                      <div className="card border shadow h-100 mr-5">
-                        <div className="d-flex justify-content-center">
-                          <img
-                            class="rounded-circle shadow-1-strong m-3"
-                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp"
-                            alt="avatar"
-                            style={{ width: "150px" }}
-                          />
-                        </div>
-                        <div class="row d-flex justify-content-center">
-                          <div>
-                            <h5 class="">Anna Deynah</h5>
-                            <p>UX Designer</p>
-                            <p class="text-justify">
+                            <p class="text-justify p-2">
                               your project involves creating complex,
                               interactive, and data-driven web applications,
                               ReactJS is an excellent choice. It excels in
                               handling real-time updates, dynamic content, and
                               single-page applications (SPAs).
                             </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                      <div className="card border shadow h-100 w-100">
+                        <div className="d-flex justify-content-center">
+                          <img
+                            class="rounded-circle shadow-1-strong m-3"
+                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp"
+                            alt="avatar"
+                          />
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                          <div>
+                            <h5 class="">Anna Deynah</h5>
+                            <p>UX Designer</p>
                             <ul class="list-unstyled d-flex justify-content-center text-warning  my-0 mb-1">
                               <li>
                                 <i class="fas fa-star fa-sm"></i>
@@ -277,32 +266,31 @@ function Aboutus() {
                                 <i class="far fa-star fa-sm"></i>
                               </li>
                             </ul>
+                            <p class="text-justify p-2">
+                              your project involves creating complex,
+                              interactive, and data-driven web applications,
+                              ReactJS is an excellent choice. It excels in
+                              handling real-time updates, dynamic content, and
+                              single-page applications (SPAs).
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
 
                     <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-                      <div className="card border shadow h-100 mr-5">
+                      <div className="card border shadow h-100 w-100">
                         <div className="d-flex justify-content-center">
                           <img
                             class="rounded-circle shadow-1-strong m-3"
                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp"
                             alt="avatar"
-                            style={{ width: "150px" }}
                           />
                         </div>
                         <div class="row d-flex justify-content-center">
                           <div>
                             <h5 class="">Anna Deynah</h5>
                             <p>UX Designer</p>
-                            <p class="text-justify">
-                              your project involves creating complex,
-                              interactive, and data-driven web applications,
-                              ReactJS is an excellent choice. It excels in
-                              handling real-time updates, dynamic content, and
-                              single-page applications (SPAs).
-                            </p>
                             <ul class="list-unstyled d-flex justify-content-center text-warning  my-0 mb-1">
                               <li>
                                 <i class="fas fa-star fa-sm"></i>
@@ -320,6 +308,13 @@ function Aboutus() {
                                 <i class="far fa-star fa-sm"></i>
                               </li>
                             </ul>
+                            <p class="text-justify p-2">
+                              your project involves creating complex,
+                              interactive, and data-driven web applications,
+                              ReactJS is an excellent choice. It excels in
+                              handling real-time updates, dynamic content, and
+                              single-page applications (SPAs).
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -364,7 +359,7 @@ background: url("https://res.cloudinary.com/dq5upuxm8/image/upload/v1696838093/b
 
 .cardteam{
   background-color:transparent;
-  border-radius: 1rem;
+  border:none;
 }
 
 

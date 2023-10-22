@@ -49,6 +49,7 @@ import UpdateProfile from "./Components/userprofilesection/UpdateProfile";
 import ProfilePublic from "./Components/userprofilesection/ProfilePublic";
 import Subscription from "./Pages/Subscription";
 import Whishlist from "./Pages/Whishlist";
+import CourseDetails from "./Components/Our-My-Courses/CourseDetails";
 // import SendOtp from "./Components/forgotpass/SendOtp.js";
 // import ResetPassOtp from "./Components/forgotpass/ResetPassOtp";
 function App() {
@@ -99,6 +100,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<FOF />} />
           <Route path="/enrollnow" element={<Enrollnow />} />
+          <Route path="/course-details/:courseid" element={<CourseDetails />} />
           {user ? (
             <>
               <Route path="/edit-profile" element={<EditProfile />} />

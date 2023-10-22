@@ -12,6 +12,7 @@ import {
 import {
   addToCart,
   addVideoToCourse,
+  coursePage,
   createCourse,
   getAllCourses,
   thumbnail,
@@ -25,9 +26,8 @@ const storage = multer.diskStorage({
     cb(null, "thumbnails/");
   },
   filename: function (req, file, cb) {
-    // const fileName =
-    //   file.fieldname + "-" + Date.now() + path.extname(file.originalname);
-    cb(null, file.originalname);
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
   },
 });
 
@@ -44,6 +44,7 @@ router.post("/add-to-cart", addToCart);
 router.post("/add-video-to-course/:courseId", addVideoToCourse);
 router.get("/getAllCourses", getAllCourses);
 router.get("/thumbnail/:courseId", thumbnail);
+router.get("/coursePage/:courseId", coursePage);
 // router.post("/add-course", upload.single("thumbnails"), createCourse);
 
 export default router;

@@ -43,38 +43,28 @@ export const createCourse = async (req, res) => {
     if (!thumbnail) {
       return res.status(400).json({ error: "Thumbnail is required" });
     }
+    const imageUrl = thumbnail.filename;
 
-    // Read the image file asynchronously
-    fs.readFile(thumbnail.path, async (err, data) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Error reading the image file" });
-      }
-
-      // Create a new course using the Course model and save the image data
-      const course = new Course({
-        name,
-        description,
-        price,
-        category,
-        thumbnails: {
-          data: data, // Store binary image data
-          contentType: thumbnail.mimetype, // Use the uploaded file's content type
-        },
-      });
-
-      // Save the course to the database using await
-      try {
-        const savedCourse = await course.save();
-        res.status(201).json({
-          message: "Course created successfully",
-          courseId: savedCourse._id,
-        });
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Error saving the course" });
-      }
+    // Create a new course using the Course model and save the image data
+    const course = new Course({
+      name,
+      description,
+      price,
+      category,
+      thumbnails: imageUrl,
     });
+
+    // Save the course to the database using await
+    try {
+      const savedCourse = await course.save();
+      res.status(201).json({
+        message: "Course created successfully",
+        courseId: savedCourse._id,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error saving the course" });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -140,16 +130,25 @@ export const thumbnail = async (req, res) => {
       return res.status(404).json({ error: "Course thumbnails not found" });
     }
 
-    // Set response headers for the image
-    res.contentType(course.thumbnails[0].contentType);
-
     // Send the image data as the response
-    res.send(course.thumbnails[0].data);
-
-    getBinaryDataById(course.thumbnails[0]._id, res);
-    x;
+    res.send(course.thumbnails);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const coursePage = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    res.send(course);
+  } catch (error) {
+    console.log(error);
   }
 };

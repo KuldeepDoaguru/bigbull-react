@@ -19,8 +19,8 @@ const courseSchema = new mongoose.Schema({
     required: true,
   },
   thumbnails: {
-    data: Buffer, // Store binary image data for thumbnails
-    contentType: String, // Store the content type of the image
+    type: String, // Course category
+    required: true,
   },
   videos: [
     {

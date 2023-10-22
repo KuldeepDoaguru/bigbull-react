@@ -10,9 +10,13 @@ import Card1 from "../Cards/Card1";
 import styled from "styled-components";
 import coursebanner from "../../image/coursebannertone.webp";
 import { BsSuitHeartFill, BsCart3, BsBell } from "react-icons/bs";
+import { Link } from "react-router-dom";
 const Courses = () => {
   const [allCourses, setallCourses] = useState([]);
   const [keyword, setkeyword] = useState("");
+  const [images, setImages] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
   const responseCourse = async () => {
     try {
@@ -26,9 +30,44 @@ const Courses = () => {
     }
   };
 
+  const responseImage = async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/api/v1/auth/thumbnail/${id}`
+      );
+      console.log(res.data);
+      setImages(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     responseCourse();
-  }, []);
+  }, []); // Fetch course information only once when the component mounts
+
+  useEffect(() => {
+    if (allCourses.length > 0) {
+      allCourses.forEach((course) => {
+        responseImage(course._id);
+      });
+    }
+  }, [allCourses]);
+
+  const handleSearch = () => {
+    // Get all text content on the page
+    const pageContent = document.body.innerText.toLowerCase();
+    // Split the content into paragraphs or sections (you can customize this based on your page structure)
+    const sections = pageContent.split("\n");
+    // Filter the sections to find those containing the keyword
+    const matchingSections = sections.filter((section) =>
+      section.includes(keyword)
+    );
+    // Set the search results
+    setSearchResults(matchingSections);
+    setShowResults(true);
+  };
 
   return (
     <>
@@ -46,6 +85,20 @@ const Courses = () => {
               onChange={(e) => setkeyword(e.target.value.toLowerCase())}
               type="text"
             />
+            <button onClick={handleSearch}>Search</button>
+          </div>
+
+          <div>
+            {showResults && (
+              <div className="searchDiv">
+                <h2>Search Results:</h2>
+                <ul>
+                  {searchResults.map((result, index) => (
+                    <li key={index}>{result}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="container ms-3 me-3 my-5 mb-5">
             <div>
@@ -58,11 +111,14 @@ const Courses = () => {
                     <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                       <div className="card course-card border rounded">
                         <div className="relative">
-                          <img
-                            src={item.thumbnails}
-                            className="card-img-top"
-                            alt="Video Thumbnail"
-                          />
+                          {images && (
+                            <img
+                              src={`http://localhost:8080/${item.thumbnails}`}
+                              className="card-img-top"
+                              alt="Course Thumbnail"
+                            />
+                          )}
+
                           <div
                             className="absolute"
                             style={{ top: "10px", right: "10px" }}
@@ -73,11 +129,14 @@ const Courses = () => {
                           </div>
                           <div className="card-body">
                             <h5 className="card-title text-center">
-                              {item.name}
+                              <Link to={`/course-details/${item._id}`}>
+                                {" "}
+                                {item.name}
+                              </Link>
                             </h5>
-                            <p className="text-center">{item.description}</p>
+                            {/* <p className="text-center">{item.description}</p> */}
                             <p className="text-center">{item.category}</p>
-                            <div>
+                            <div className="d-flex justify-center">
                               <h5 className="text-center  ">4.9</h5>
                               <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
                                 <li>
@@ -112,157 +171,6 @@ const Courses = () => {
                     </div>
                   </>
                 ))}
-
-                {/* <div className="card course-card d-flex mr-3 border rounded">
-                  <div className="relative">
-                    <img
-                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
-                      className="card-img-top"
-                      alt="Video Thumbnail"
-                    />
-                    <div
-                      className="absolute"
-                      style={{ top: "10px", right: "10px" }}
-                    >
-                      <div className="relative">
-                        <BsSuitHeartFill className="icons" />
-                      </div>
-                    </div>
-                    <div className="card-body">
-                      <h5 className="card-title text-center">
-                        Ultimate Financial Course
-                      </h5>
-                      <p className="text-center">Bigbull</p>
-                      <div>
-                        <h5 className="text-center  ">4.9</h5>
-                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="far fa-star fa-sm"></i>
-                          </li>
-                        </ul>
-                      </div>
-
-                      <h5 className="text-center">Price - ₹10000</h5>
-                      <div className="d-flex justify-content-center">
-                        <a href="/" className="btn btn-primary mt-1">
-                          Add to Cart
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card course-card d-flex mr-3 border">
-                  <div className="relative">
-                    <img
-                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
-                      className="card-img-top"
-                      alt="Video Thumbnail"
-                    />
-                    <div
-                      className="absolute"
-                      style={{ top: "10px", right: "10px" }}
-                    >
-                      <div className="relative">
-                        <BsSuitHeartFill className="icons" />
-                      </div>
-                    </div>
-                    <div className="card-body">
-                      <h5 className="card-title text-center">
-                        Ultimate Financial Course
-                      </h5>
-                      <p className="text-center">Bigbull</p>
-                      <div>
-                        <h5 className="text-center  ">4.9</h5>
-                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="far fa-star fa-sm"></i>
-                          </li>
-                        </ul>
-                      </div>
-
-                      <h5 className="text-center">Price - ₹10000</h5>
-                      <div className="d-flex justify-content-center">
-                        <a href="/" className="btn btn-primary mt-1">
-                          Add to Cart
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card course-card d-flex mr-3 border rounded">
-                  <div className="relative">
-                    <img
-                      src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
-                      className="card-img-top"
-                      alt="Video Thumbnail"
-                    />
-                    <div
-                      className="absolute"
-                      style={{ top: "10px", right: "10px" }}
-                    >
-                      <div className="relative">
-                        <BsSuitHeartFill className="icons" />
-                      </div>
-                    </div>
-                    <div className="card-body">
-                      <h5 className="card-title text-center">
-                        Ultimate Financial Course
-                      </h5>
-                      <p className="text-center">Bigbull</p>
-                      <div>
-                        <h5 className="text-center  ">4.9</h5>
-                        <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-star fa-sm"></i>
-                          </li>
-                          <li>
-                            <i className="far fa-star fa-sm"></i>
-                          </li>
-                        </ul>
-                      </div>
-
-                      <h5 className="text-center">Price - ₹10000</h5>
-                      <div className="d-flex justify-content-center">
-                        <a href="/" className="btn btn-primary mt-1">
-                          Add to Cart
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
@@ -282,7 +190,7 @@ const Container = styled.div`
   }
 
   .course-card {
-    height: 29rem !important;
+    height: 25rem !important;
     width: 100%;
     border-radius: 1rem;
     img {

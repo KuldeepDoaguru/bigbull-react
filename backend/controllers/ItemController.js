@@ -71,38 +71,6 @@ export const createCourse = async (req, res) => {
   }
 };
 
-export const addVideoToCourse = async (req, res) => {
-  try {
-    const courseId = req.params.courseId;
-    const { title, url, duration, category } = req.body;
-
-    // Find the course by courseId
-    const course = await Course.findById(courseId);
-
-    if (!course) {
-      return res.status(404).json({ error: "Course not found" });
-    }
-
-    // Create the video and add it to the course's videos array
-    const video = {
-      title,
-      url,
-      duration,
-      category,
-    };
-
-    course.videos.push(video);
-
-    // Save the updated course with the added video
-    await course.save();
-
-    res.status(201).json({ message: "Video added to course successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 export const getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find().populate("videos");
@@ -152,3 +120,112 @@ export const coursePage = async (req, res) => {
     console.log(error);
   }
 };
+
+export const editCourse = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+    const { name, description, price, category } = req.body;
+    const thumbnail = req.file;
+
+    if (!thumbnail) {
+      return res.status(400).json({ error: "Thumbnail is required" });
+    }
+
+    // Find the existing course by ID
+    const existingCourse = await Course.findById(courseId);
+    if (!existingCourse) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    // Update the course properties
+    existingCourse.name = name;
+    existingCourse.description = description;
+    existingCourse.price = price;
+    existingCourse.category = category;
+    existingCourse.thumbnails = thumbnail.filename; // Assuming you have a 'thumbnail' field
+
+    // Save the updated course
+    await existingCourse.save();
+
+    res.status(200).json({
+      message: "Course updated successfully",
+      courseId: existingCourse._id,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const deleteCourse = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+    // Find the existing course by ID
+    const existingCourse = await Course.findById(courseId);
+    if (!existingCourse) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+    // Delete the existing course
+    await existingCourse.deleteOne();
+    res.status(200).json({ message: "Course deleted successfully" });
+  } catch (error) {
+    console.log("error :", error);
+  }
+};
+
+export const addCourseVideos = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+    const { title, duration, category, description } = req.body;
+    const videoFile = req.file; // The uploaded video file
+
+    if (!videoFile) {
+      return res.status(400).json({ error: "Video file is required" });
+    }
+
+    // Ensure that "url" is set to "videoFile.filename"
+    const videoUrl = videoFile.originalname;
+
+    // Create a new video object
+    const video = {
+      title,
+      url: videoUrl,
+      duration,
+      description,
+      category,
+    };
+
+    // Find the course by ID and push the new video to its 'videos' array
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    course.videos.push(video);
+
+    // Save the updated course document
+    await course.save();
+
+    res.status(201).json(course);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const videoListViaCourseId = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+    console.log(courseId);
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+    res.send(course.videos);
+    console.log(course.videos);
+    console.log(course);
+  } catch (error) {
+    console.log(error);
+  }
+};
+

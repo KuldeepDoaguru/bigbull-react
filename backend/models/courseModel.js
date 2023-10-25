@@ -33,12 +33,15 @@ const courseSchema = new mongoose.Schema({
         required: true,
       },
       duration: {
-        type: Number,
+        type: String,
         required: true,
       },
       category: {
         type: String, // Video category
         required: true,
+      },
+      description: {
+        type: String, // Video category
       },
     },
   ],

@@ -10,12 +10,15 @@ import {
   updatePassword,
 } from "../controllers/authController.js";
 import {
+  addCourseVideos,
   addToCart,
-  addVideoToCourse,
   coursePage,
   createCourse,
+  deleteCourse,
+  editCourse,
   getAllCourses,
   thumbnail,
+  videoListViaCourseId,
 } from "../controllers/ItemController.js";
 
 //router object
@@ -41,10 +44,30 @@ router.post("/login", loginController);
 router.post("/sendOtp", sendOtp);
 router.post("/updatePassword", updatePassword);
 router.post("/add-to-cart", addToCart);
-router.post("/add-video-to-course/:courseId", addVideoToCourse);
 router.get("/getAllCourses", getAllCourses);
 router.get("/thumbnail/:courseId", thumbnail);
 router.get("/coursePage/:courseId", coursePage);
+router.put("/editCourse/:courseId", upload.single("thumbnails"), editCourse);
+router.delete("/deleteCourse/:courseId", deleteCourse);
 // router.post("/add-course", upload.single("thumbnails"), createCourse);
+
+const Videostorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "videoCourse/"); // Specify the upload directory
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Use the original filename
+  },
+});
+
+const Videoupload = multer({ storage: Videostorage });
+
+router.post(
+  "/courses/:courseId/videos",
+  Videoupload.single("videoFile"),
+  addCourseVideos
+);
+
+router.get(`/videoListViaCourseId/:courseId`, videoListViaCourseId);
 
 export default router;

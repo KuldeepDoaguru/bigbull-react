@@ -5,6 +5,7 @@ import Navbar from "../../Navbar";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Addcourse = () => {
   const [course_name, setcoursename] = useState("");
@@ -12,6 +13,7 @@ const Addcourse = () => {
   const [course_description, setcoursedescription] = useState("");
   const [category, setCategory] = useState("");
   const [course_price, setcourseprice] = useState("");
+  const navigate = useNavigate();
 
   const formdata = new FormData();
   formdata.append("name", course_name);
@@ -22,40 +24,16 @@ const Addcourse = () => {
 
   const PostData = async (e) => {
     e.preventDefault();
-    console.log(typeof course_image);
-    axios
-      .post("http://localhost:8080/api/v1/auth/add-course", formdata)
-      .then((response) => {
-        if (response.status === 400) {
-          toast.error(e.response.data + "💀", {
-            position: "top-center",
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            theme: "colored",
-          });
-        }
-        if (response.status === 200) {
-          toast.success("successfull!", {
-            position: "top-center",
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            theme: "colored",
-          });
-        }
-      })
-      .catch((e) => {
-        if (e.response.status === 400) {
-          toast.error(e.response.data + "💀", {
-            position: "top-center",
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            theme: "colored",
-          });
-        }
-      });
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/add-course",
+        formdata
+      );
+      console.log(response.data);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

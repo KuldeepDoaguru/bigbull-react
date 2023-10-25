@@ -265,3 +265,74 @@ export const updatePassword = async (req, res) => {
     });
   }
 };
+
+export const manageUsers = async (req, res) => {
+  try {
+    const users = await userModel.find();
+    res.status(200).json(users);
+    console.log(users);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateUsers = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { name, email, phone, gender, country, state, address, dob } =
+      req.body;
+
+    // Find the user by their unique identifier (e.g., ID)
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Update user properties
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (phone) user.phone = phone;
+    if (gender) user.gender = gender;
+    if (country) user.country = country;
+    if (state) user.state = state;
+    if (address) user.address = address;
+    if (dob) user.dob = dob;
+
+    // Save the updated user
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "User details updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+export const getUserViaId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "User not found",
+      });
+      console.log(user);
+    } else {
+      res.status(200).send({ user });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

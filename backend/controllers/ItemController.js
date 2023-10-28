@@ -1,7 +1,9 @@
 // import connectDB from "../config/db.js";
 import Cart from "../models/cartModel.js";
 import Course from "../models/courseModel.js";
+
 import fs from "fs";
+import Wishlist from "../models/wishlist.js";
 
 export const addToCart = async (req, res) => {
   try {
@@ -229,3 +231,48 @@ export const videoListViaCourseId = async (req, res) => {
   }
 };
 
+export const addToWishlist = async (req, res) => {
+  try {
+    const { userId, productId } = req.params;
+
+    // Find the user's wishlist or create a new one if it doesn't exist
+    let wishlist = await Wishlist.findOne({ user: userId });
+
+    if (!wishlist) {
+      wishlist = new Wishlist({
+        user: userId,
+        items: [productId],
+      });
+    } else {
+      // Check if the product is already in the wishlist
+      if (!wishlist.items.includes(productId)) {
+        wishlist.items.push(productId);
+      }
+    }
+
+    await wishlist.save();
+
+    res
+      .status(201)
+      .json({ message: "Product added to the wishlist successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getWishlistItems = async (req, res) => {
+  try {
+    const { userId, productId } = req.params;
+    const wishlist = await Wishlist.findOne({ user: userId, items: productId });
+
+    if (!wishlist) {
+      return res.status(404).json({ error: "Item not found in the wishlist" });
+    }
+
+    return res.status(200).json({ wishlist });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};

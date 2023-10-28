@@ -27,6 +27,7 @@ const CourseDetails = () => {
         `http://localhost:8080/api/v1/auth/coursePage/${courseid}`
       );
       console.log(res.data);
+      setCourseData(res.data);
       localStorage.setItem("courseData", JSON.stringify(res.data));
     } catch (error) {
       console.log(error);
@@ -38,7 +39,7 @@ const CourseDetails = () => {
   }, []);
 
   const storedCourseData = JSON.parse(localStorage.getItem("courseData"));
-  console.log(storedCourseData);
+  console.log(courseData);
   // setCourseData(storedCourseData);
   // console.log(storedCourseData.name);
 
@@ -67,12 +68,12 @@ const CourseDetails = () => {
               </div>
               <div className="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
                 <div className="container">
-                  <h1>{storedCourseData.name}</h1>
-                  <p className="mt-3 mb-0">{storedCourseData.description}</p>
+                  <h1>{courseData?.name}</h1>
+                  <p className="mt-3 mb-0">{courseData?.description}</p>
                   <p>
-                    <strong>Category :</strong> {storedCourseData.category}
+                    <strong>Category :</strong> {courseData?.category}
                   </p>
-                  <p className="fw-bold">Rs. ₹{storedCourseData.price}</p>
+                  <p className="fw-bold">Rs. ₹{courseData?.price}</p>
                   <button className="btn btn-info">Enroll Now</button>
                 </div>
               </div>

@@ -8,7 +8,7 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { BsSuitHeartFill } from "react-icons/bs";
+import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 
 const Homepagecoursecardcontainer = () => {
   const [allCourses, setAllCourses] = useState([]);

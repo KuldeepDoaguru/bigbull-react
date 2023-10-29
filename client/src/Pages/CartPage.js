@@ -5,11 +5,11 @@ import styled from "styled-components";
 import { BsSuitHeartFill, BsSuitHeart, BsCart3, BsBell } from "react-icons/bs";
 import axios from "axios";
 
-const Whishlist = () => {
+const CartPage = () => {
   const [allCourses, setallCourses] = useState([]);
   const [images, setImages] = useState([]);
   const user = useSelector((state) => state.user);
-  const [wishlistItem, setWishlistItem] = useState({});
+  const [cartItem, setCartItem] = useState({});
   console.log(`User Name: ${user.name}, User ID: ${user.id}`);
   console.log("User State:", user);
 
@@ -38,22 +38,22 @@ const Whishlist = () => {
     }
   };
 
-  const displayWishlistItem = async () => {
+  const displayCartItem = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/v1/auth/getWishlistItems/${user.id}`
+        `http://localhost:8080/api/v1/auth/getCartItems/${user.id}`
       );
-      console.log(response.data.wishlist);
-      setWishlistItem(response.data.wishlist);
+      console.log(response.data.CartItem);
+      setCartItem(response.data.CartItem);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(wishlistItem.items);
+  console.log(cartItem.items);
 
   useEffect(() => {
-    displayWishlistItem();
+    displayCartItem();
   }, []);
 
   useEffect(() => {
@@ -68,53 +68,74 @@ const Whishlist = () => {
     responseCourse();
   }, []);
 
-  const coursesInWishlist = allCourses.filter((course) =>
-    wishlistItem.items.includes(course._id)
+  const coursesInCart = allCourses.filter((course) =>
+    cartItem.items.includes(course._id)
   );
 
-  console.log(coursesInWishlist);
+  console.log(coursesInCart);
+
+  
+
+  const totalPrice = () => {
+    try {
+      let total = 0;
+      coursesInCart.forEach((item) => {
+        total = total + parseFloat(item.price);
+      });
+      return total;
+    } catch (error) {
+      console.log(error);
+      return 0;
+    }
+  };
 
   return (
     <>
       <Container>
         <div className="coursepage">
-          <h1 className="title mt-5">My Wishlist</h1>
+          <h1 className="title mt-5">My Course Cart</h1>
           <div className="container ms-3 me-3 my-5 mb-5">
             <div className="container">
               <div className="row g-3">
-                {coursesInWishlist?.map((item, index) => (
-                  <div
-                    className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12"
-                    key={index}
-                  >
-                    <div className="card course-card border rounded">
-                      <div className="relative">
-                        {images && (
-                          <img
-                            src={`http://localhost:8080/${item.thumbnails}`}
-                            className="card-img-top"
-                            alt="Course Thumbnail"
-                          />
-                        )}
-
-                        <div
-                          className="absolute"
-                          style={{ top: "10px", right: "10px" }}
-                        >
+                <div className="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+                  {coursesInCart?.map((item, index) => (
+                    <div className="row d-flex flex-row">
+                      <div
+                        className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12"
+                        key={index}
+                      >
+                        <div className="card course-card rounded">
                           <div className="relative">
-                            <BsSuitHeartFill className="icons-added" />
+                            {images && (
+                              <img
+                                src={`http://localhost:8080/${item.thumbnails}`}
+                                className="card-img-top"
+                                alt="Course Thumbnail"
+                              />
+                            )}
+
+                            <div
+                              className="absolute"
+                              style={{ top: "10px", right: "10px" }}
+                            >
+                              <div className="relative">
+                                <BsSuitHeartFill className="icons-added" />
+                              </div>
+                            </div>
                           </div>
                         </div>
+                      </div>
+                      <div className="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
                         <div className="card-body">
-                          <h5 className="card-title text-center">
+                          <h5 className="card-title text-start">
                             <Link to={`/course-details/${item._id}`}>
                               {item.name}
                             </Link>
                           </h5>
-                          <p className="text-center">{item.category}</p>
-                          <div className="d-flex justify-center">
-                            <h5 className="text-center  ">4.9</h5>
-                            <ul className="list-unstyled d-flex justify-content-center text-warning mb-1">
+                          <p className="text-start">{item.category}</p>
+                          <div className="d-flex justify-start">
+                            <h5 className="text-start  ">4.9</h5>
+                            <ul className="list-unstyled d-flex justify-content-start text-warning mb-1">
                               <li>
                                 <i className="fas fa-star fa-sm"></i>
                               </li>
@@ -132,23 +153,34 @@ const Whishlist = () => {
                               </li>
                             </ul>
                           </div>
-                          <h5 className="text-center">Price - ₹{item.price}</h5>
-                          <div className="d-flex justify-content-evenly">
-                            <a href="/" className="btn btn-primary mt-1">
-                              Add to Cart
-                            </a>
+                          <h5 className="text-start">Price - ₹{item.price}</h5>
+                          <div className="d-flex justify-content-start">
                             <a
-                              href="/whishlist"
+                              href="/course-cart"
                               className="btn btn-danger mt-1"
                             >
-                              Remove from wishlist
+                              Remove from Cart
                             </a>
                           </div>
                         </div>
                       </div>
+                      <hr className="mt-2" />
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                  <h4>Cart Summary</h4>
+                  <p>Total | Checkout | Payment</p>
+                  <hr />
+                  <h4>Total :{totalPrice()}</h4>
+
+                  <button
+                    className="btn btn-success"
+                    // onClick={makePaymentStripeAndDownload}
+                  >
+                    make payment
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -158,10 +190,9 @@ const Whishlist = () => {
   );
 };
 
-export default Whishlist;
+export default CartPage;
 const Container = styled.div`
   .course-card {
-    height: 25rem !important;
     width: 100%;
     border-radius: 1rem;
     img {

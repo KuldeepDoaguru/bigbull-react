@@ -1,9 +1,14 @@
 import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 // import { hashPassword } from "./../helper/authHelper.js";
 import JWT from "jsonwebtoken";
-import { otpModel } from "../models/otpModel.js";
+import otpModel from "../models/otpModel.js";
+import Admin from "../models/adminModel.js";
+dotenv.config();
+
+const PORT = process.env.PORT;
 
 export const registerController = async (req, res) => {
   try {
@@ -334,5 +339,173 @@ export const getUserViaId = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const AdminRegister = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Check if the user already exists
+    const existingUser = await Admin.findOne({ email });
+
+    if (existingUser) {
+      return res.status(200).json({
+        success: false,
+        message: "User already registered. Please login.",
+      });
+    }
+
+    // Create a new user
+    const adminuser = await new Admin({
+      email,
+      password: hashedPassword,
+      status: "notactive",
+    }).save();
+
+    res.status(201).json({
+      success: true,
+      message: "Admin registered successfully",
+      adminuser,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const adminLoginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(404).send({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+    const user = await Admin.findOne({ email });
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "Email is not registered",
+      });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(200).send({
+        success: false,
+        message: "Invalid Password",
+      });
+    }
+
+    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.status(200).send({
+      success: true,
+      message: "login successfully",
+      user: {
+        _id: user._id,
+        email: user.email,
+      },
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// export const sendOtpAdmin = async (req, res) => {
+//   try {
+//     const { email, otp } = req.body;
+
+//     // Configure Nodemailer transporter
+//     const transporter = nodemailer.createTransport({
+//       service: "Gmail",
+//       auth: {
+//         user: process.env.EMAILSENDER,
+//         pass: process.env.EMAILPASSWORD,
+//       },
+//     });
+
+//     const mailOptions = {
+//       from: process.env.EMAILSENDER,
+//       to: email,
+//       subject: "OTP for Admin Login",
+//       text: `Hello ${name},\n\nYour OTP for Admin Login is: ${}`,
+//     };
+//   } catch (error) {}
+// };
+
+// otpsend and update
+function generateOTP() {
+  const digits = "0123456789";
+  let otp = "";
+  for (let i = 0; i < 6; i++) {
+    const randomIndex = Math.floor(Math.random() * 10);
+    otp += digits[randomIndex];
+  }
+  return otp;
+}
+
+async function saveOrUpdateOTP(email, otp) {
+  const existingOTP = await otpModel.findOne({ email });
+
+  if (existingOTP) {
+    existingOTP.code = otp;
+    existingOTP.expiresIn = Date.now() + 5 * 60 * 1000;
+    await existingOTP.save();
+  } else {
+    // Create a new OTP document
+    const expiresIn = Date.now() + 5 * 60 * 1000;
+    const otpDocument = new otpModel({ email, code: otp, expiresIn });
+    await otpDocument.save();
+  }
+}
+
+export const sendOtpAdmin = async (req, res) => {
+  try {
+    const { email, name } = req.body;
+
+    // Generate a 6-digit OTP
+    const otp = generateOTP();
+
+    // Save or update the OTP in the database
+    await saveOrUpdateOTP(email, otp);
+
+    // Configure Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAILSENDER,
+        pass: process.env.EMAILPASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAILSENDER,
+      to: email,
+      subject: "OTP for Admin Login",
+      text: `Hello ${name},\n\nYour OTP for Admin Login is: ${otp}`,
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email: " + error);
+        res.status(500).json({ error: "Failed to send OTP" });
+      } else {
+        console.log("Email sent: " + info.response);
+        res.status(200).json({ message: "OTP sent successfully" });
+      }
+    });
+  } catch (error) {
+    console.error("Error: " + error);
+    res.status(500).json({ error: "An error occurred" });
   }
 };

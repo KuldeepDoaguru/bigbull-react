@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { BsSuitHeart, BsCart3, BsBell } from "react-icons/bs";
+import { BsSuitHeart, BsSuitHeartFill, BsCart3, BsBell } from "react-icons/bs";
 import { RxAvatar } from "react-icons/rx";
 
 const Navigationbar = () => {
@@ -92,9 +92,9 @@ const Navigationbar = () => {
                       My Learning
                     </Link>
                     <Link className="nav-link" to="/whishlist">
-                      <BsSuitHeart className="icons" />
+                      <BsSuitHeartFill className="icons" />
                     </Link>
-                    <Link className="nav-link" to="/login">
+                    <Link className="nav-link" to="/course-cart">
                       <BsCart3 className="icons" />
                     </Link>
 

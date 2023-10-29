@@ -7,15 +7,19 @@ import { MdOndemandVideo } from "react-icons/md";
 import WhatLearn from "../CourseDetailsTabs/WhatLearn";
 import CourseModule from "../CourseDetailsTabs/CourseModule";
 import TestimonialCourse from "../CourseDetailsTabs/TestimonialCourse";
+import cogoToast from "cogo-toast";
+import { useSelector } from "react-redux";
 
 const CourseDetails = () => {
   let { courseid } = useParams();
   const [courseData, setCourseData] = useState(null);
   const [videoPlay, setVideoPlay] = useState(false);
   const videoRef = useRef(null);
+  const user = useSelector((state) => state.user);
+  console.log(`User Name: ${user.name}, User ID: ${user.id}`);
+  console.log("User State:", user);
 
   const playVideo = () => {
-    videoRef.current.play();
     setVideoPlay(true);
   };
 
@@ -43,6 +47,20 @@ const CourseDetails = () => {
   // setCourseData(storedCourseData);
   // console.log(storedCourseData.name);
 
+  const addCartTo = async (id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/auth/addtocart/${user.id}/${id}`
+      );
+
+      console.log(response);
+      cogoToast.success("Course addded to the cart");
+    } catch (error) {
+      console.log(error);
+      cogoToast.error("course already in the cart");
+    }
+  };
+
   return (
     <>
       <Container>
@@ -51,18 +69,26 @@ const CourseDetails = () => {
             <div className="row">
               <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                 <div className="container">
-                  <video
-                    ref={videoRef}
-                    src="https://res.cloudinary.com/dq5upuxm8/video/upload/v1697973901/Stranger_Things_4___Volume_2_Trailer___Netflix_u6dbve.mp4"
-                    controls={videoPlay}
-                  ></video>
-                  {!videoPlay && (
-                    <button
-                      className="btn btn-success mt-2"
-                      onClick={playVideo}
-                    >
-                      Watch Demo
-                    </button>
+                  {videoPlay ? (
+                    <video
+                      src="https://res.cloudinary.com/dq5upuxm8/video/upload/v1697973901/Stranger_Things_4___Volume_2_Trailer___Netflix_u6dbve.mp4"
+                      controls
+                      autoPlay
+                    ></video>
+                  ) : (
+                    <>
+                      <img
+                        className="card-img-top imgthumb"
+                        src="https://res.cloudinary.com/dq5upuxm8/image/upload/v1697625839/bigbull_cards_cpbg4n.png"
+                        alt="Card cap"
+                      />
+                      <button
+                        className="btn btn-success mt-2"
+                        onClick={playVideo}
+                      >
+                        Watch Demo
+                      </button>
+                    </>
                   )}
                 </div>
               </div>
@@ -74,7 +100,9 @@ const CourseDetails = () => {
                     <strong>Category :</strong> {courseData?.category}
                   </p>
                   <p className="fw-bold">Rs. ₹{courseData?.price}</p>
-                  <button className="btn btn-info">Enroll Now</button>
+                  <button className="btn btn-info" onClick={addCartTo}>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             </div>
@@ -198,5 +226,10 @@ const Container = styled.div`
     padding-top: 3rem;
     padding-bottom: 2rem;
     background: linear-gradient(to right, #ffefba, #ffffff);
+  }
+
+  .imgthumb {
+    height: 12rem;
+    width: 14rem;
   }
 `;

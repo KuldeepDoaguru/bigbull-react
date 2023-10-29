@@ -12,6 +12,8 @@ import coursebanner from "../../image/coursebannertone.webp";
 import { BsSuitHeartFill, BsSuitHeart, BsCart3, BsBell } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import cogoToast from "cogo-toast";
+
 const Courses = () => {
   const [allCourses, setallCourses] = useState([]);
   const [keyword, setKeyword] = useState("");
@@ -20,6 +22,8 @@ const Courses = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const user = useSelector((state) => state.user);
+  const [wishlistItem, setWishlistItem] = useState({});
+  const [cartItem, setCartItem] = useState({});
   console.log(`User Name: ${user.name}, User ID: ${user.id}`);
   console.log("User State:", user);
 
@@ -94,14 +98,43 @@ const Courses = () => {
       );
 
       console.log(response);
+      cogoToast.success("Course addded to the wishlist");
     } catch (error) {
       console.log(error);
     }
   };
 
-  // const getWishlistItem = async()=>{
+  const displayWishlistItem = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/auth/getWishlistItems/${user.id}`
+      );
+      console.log(response.data.wishlist);
+      setWishlistItem(response.data.wishlist);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // }
+  console.log(wishlistItem.items);
+
+  useEffect(() => {
+    displayWishlistItem();
+  }, []);
+
+  const addCartTo = async (id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/auth/addtocart/${user.id}/${id}`
+      );
+
+      console.log(response);
+      cogoToast.success("Course addded to the cart");
+    } catch (error) {
+      console.log(error);
+      cogoToast.error("course already in the cart");
+    }
+  };
   return (
     <>
       <Container>
@@ -148,10 +181,14 @@ const Courses = () => {
                             style={{ top: "10px", right: "10px" }}
                           >
                             <div className="relative">
-                              <BsSuitHeartFill
-                                onClick={() => addWishlist(item._id)}
-                                className="icons"
-                              />
+                              {wishlistItem.items?.includes(item._id) ? (
+                                <BsSuitHeartFill className="icons-added" />
+                              ) : (
+                                <BsSuitHeartFill
+                                  onClick={() => addWishlist(item._id)}
+                                  className="icons"
+                                />
+                              )}
                             </div>
                           </div>
                           <div className="card-body">
@@ -185,9 +222,12 @@ const Courses = () => {
                               Price - ₹{item.price}
                             </h5>
                             <div className="d-flex justify-content-center">
-                              <a href="/" className="btn btn-primary mt-1">
+                              <button
+                                className="btn btn-primary mt-1"
+                                onClick={() => addCartTo(item._id)}
+                              >
                                 Add to Cart
-                              </a>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -261,9 +301,12 @@ const Courses = () => {
                             Price - ₹{result.price}
                           </h5>
                           <div className="d-flex justify-content-center">
-                            <a href="/" className="btn btn-primary mt-1">
+                            <button
+                              className="btn btn-primary mt-1"
+                              onClick={() => addCartTo(result._id)}
+                            >
                               Add to Cart
-                            </a>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -307,5 +350,9 @@ const Container = styled.div`
 
   .icons {
     color: white;
+  }
+
+  .icons-added {
+    color: red;
   }
 `;

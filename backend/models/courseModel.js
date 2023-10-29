@@ -15,11 +15,11 @@ const courseSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: String, // Course category
+    type: String,
     required: true,
   },
   thumbnails: {
-    type: String, // Course category
+    type: String,
     required: true,
   },
   videos: [
@@ -37,15 +37,14 @@ const courseSchema = new mongoose.Schema({
         required: true,
       },
       category: {
-        type: String, // Video category
+        type: String,
         required: true,
       },
       description: {
-        type: String, // Video category
+        type: String,
       },
     },
   ],
-  // Add other course-related fields
 });
 
 const Course = mongoose.model("Course", courseSchema);

@@ -74,8 +74,6 @@ const CartPage = () => {
 
   console.log(coursesInCart);
 
-  
-
   const totalPrice = () => {
     try {
       let total = 0;
@@ -93,7 +91,7 @@ const CartPage = () => {
     <>
       <Container>
         <div className="coursepage">
-          <h1 className="title mt-5">My Course Cart</h1>
+          <h1 className="title mt-5">My Course Cart test</h1>
           <div className="container ms-3 me-3 my-5 mb-5">
             <div className="container">
               <div className="row g-3">
